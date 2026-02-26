@@ -1,0 +1,1 @@
+export async function moderateComment(text: string) { return true; }
