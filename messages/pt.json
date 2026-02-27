@@ -18,6 +18,26 @@
     "newsletter": "Escrevo sobre Tecnologia",
     "newsletter_desc": "Artigos sobre arquitetura, design, e dicas de engenharia.",
     "about_me_title": "Sobre mim",
-    "about_me_desc": "Engenheiro de Software focado em criar experiências digitais excepcionais. Combino rigor técnico com uma visão estética apurada para entregar soluções que realmente fazem a diferença."
+    "about_me_desc": "Engenheiro de Software focado em criar experiências digitais excepcionais. Combino rigor técnico com uma visão estética apurada para entregar soluções que realmente fazem a diferença.",
+    "academic_title": "Formação Acadêmica",
+    "academic_headline": "Construindo uma base sólida",
+    "academic_desc": "Minha trajetória combina o foco prático do desenvolvimento com o rigor analítico da pesquisa acadêmica.",
+    "academic_milestone_1_title": "Análise e Desenv. de Sistemas",
+    "academic_milestone_1_institution": "Faculdade FACINT",
+    "academic_milestone_1_sub": "2023 — 2025",
+    "academic_milestone_2_title": "Mestrado em Ciência da Computação",
+    "academic_milestone_2_institution": "UNESP",
+    "academic_milestone_2_sub": "2026 — Cursando",
+    "academic_cert_msc": "DIPLOMA DE MESTRADO",
+    "academic_cert_bsc": "DIPLOMA DE GRADUAÇÃO",
+    "academic_cert_certifies": "CERTIFICA:",
+    "academic_cert_degree_msc": "Mestrado em Ciência da Computação",
+    "academic_cert_degree_bsc": "Análise e Desenvolvimento de Sistemas",
+    "academic_cert_signature": "Assinatura do Reitor",
+    "academic_name": "Gabriel Gama",
+    "academic_grade": "Média: {grade}",
+    "academic_status_concluded": "CONCLUÍDO",
+    "academic_status_in_progress": "EM CURSO",
+    "academic_certificates": "Certificações"
   }
 }

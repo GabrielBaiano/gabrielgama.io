@@ -3,8 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Sparkles, ArrowUpRight, Code2, Mountain, Loader2, Feather, Clock, Linkedin, Terminal } from "lucide-react";
+import { Sparkles, ArrowUpRight, Code2, Mountain, Loader2, Feather, Clock, Linkedin, Terminal, GraduationCap, CheckCircle2, Compass, PencilRuler, Youtube, Award } from "lucide-react";
+import Image from "next/image";
 import { ProjectsFolderModal } from "./ProjectsFolderModal";
+import { Certificate } from "./Certificate";
+import { EducationCard } from "./EducationCard";
+import { FolderCard } from "./FolderCard";
 
 export function AboutGrid() {
     const t = useTranslations("About");
@@ -53,28 +57,14 @@ export function AboutGrid() {
                 className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-3 md:gap-4 grid-flow-dense max-w-[1200px] mx-auto p-4 auto-rows-[calc((100vw-2.75rem)/2)] md:auto-rows-[calc((100vw-4rem)/4)] lg:auto-rows-[calc((min(100vw,1200px)-13rem)/12)]"
             >
                 {/* 1. Folder Card - Corrected Span */}
-                <motion.div
-                    variants={item}
-                    whileHover={{ scale: 0.98 }}
+                {/* 1. Folder Card - Blue */}
+                <FolderCard
+                    color="#94B9FF"
+                    hoverColor="#9DBEFF"
+                    label={t("projects")}
                     onClick={() => setIsFolderOpen(true)}
-                    className="col-span-2 md:col-span-2 lg:col-span-3 row-span-2 lg:row-span-2 relative group cursor-pointer flex flex-col drop-shadow-sm h-full w-full aspect-[2/1] lg:aspect-auto"
-                >
-                    <div className="w-full h-8 relative z-20 flex" style={{ marginBottom: "-1px" }}>
-                        <svg
-                            className="ml-6 h-full w-[140px] text-[#94B9FF] group-hover:text-[#9DBEFF] transition-colors fill-current"
-                            viewBox="0 0 160 32"
-                            preserveAspectRatio="none"
-                        >
-                            <path d="M 0 32 C 12 32, 16 24, 20 16 C 24 8, 28 0, 40 0 L 120 0 C 132 0, 136 8, 140 16 C 144 24, 148 32, 160 32 Z" />
-                        </svg>
-                    </div>
-                    <div className="w-full h-[calc(100%-2rem)] bg-[#94B9FF] group-hover:bg-[#9DBEFF] transition-colors rounded-[24px] relative shadow-inner overflow-hidden flex flex-col justify-end z-[11] p-4 md:p-5">
-                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-                        <div className="absolute bottom-4 right-4 bg-[#FCE28A] text-yellow-900 px-4 py-2 rounded-full text-xs font-bold shadow-sm flex items-center group-hover:scale-105 transition-transform duration-300">
-                            {t("projects")}
-                        </div>
-                    </div>
-                </motion.div>
+                    className="col-span-2 md:col-span-2 lg:col-span-3 row-span-2 lg:row-span-2"
+                />
 
                 {/* 2. Current Position Card (Square proportional to Folder) */}
                 <motion.div
@@ -179,7 +169,6 @@ export function AboutGrid() {
                     </div>
                 </motion.div>
 
-                {/* 5. LinkedIn Square (1x1) - Under Clock */}
                 <motion.a
                     variants={item}
                     href="https://www.linkedin.com/in/gabriel-gama-6301633b2/"
@@ -187,38 +176,59 @@ export function AboutGrid() {
                     rel="noopener noreferrer"
                     className="col-span-1 row-span-1 bg-[#0077B5] rounded-[24px] shadow-sm flex items-center justify-center aspect-square group cursor-pointer hover:bg-[#006396] transition-colors"
                 >
-                    <Linkedin className="w-10 h-10 text-white group-hover:scale-110 transition-transform" />
+                    <svg
+                        viewBox="0 0 24 24"
+                        className="w-10 h-10 text-white fill-current group-hover:scale-110 transition-transform"
+                    >
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
                 </motion.a>
 
-                {/* 6. Interactive Pato (Quack) Card - Under GitHub */}
+                <motion.a
+                    variants={item}
+                    href="https://youtube.com/@gabrielgamadev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="col-span-1 row-span-1 bg-[#FF0000] rounded-[24px] shadow-sm flex items-center justify-center aspect-square group cursor-pointer hover:bg-[#E60000] transition-colors overflow-hidden"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        className="w-12 h-12 text-white fill-current group-hover:scale-110 transition-transform"
+                    >
+                        <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+                    </svg>
+                </motion.a>
+
+                {/* 7. Setup Image Card (2x4) - Under Folder */}
                 <motion.div
                     variants={item}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{
-                        scale: 0.95,
-                        rotate: [0, -20, 20, -20, 20, 0],
-                        transition: { duration: 0.2 }
-                    }}
-                    onClick={() => {
-                        const sound = new Audio("https://www.soundjay.com/misc/sounds/duck-quack-1.mp3");
-                        sound.play().catch(e => console.error("Audio play failed:", e));
-                    }}
-                    className="col-span-1 row-span-1 bg-yellow-400 rounded-[24px] shadow-sm flex items-center justify-center aspect-square group cursor-pointer relative overflow-hidden"
+                    className="col-span-2 row-span-4 bg-[#F5F5F7] dark:bg-zinc-900 rounded-[24px] overflow-hidden relative aspect-[2/4]"
                 >
-                    <motion.div className="relative">
-                        <svg viewBox="0 0 24 24" className="w-12 h-12 text-yellow-900 fill-current">
-                            <path d="M12,2C10.9,2,10,2.9,10,4c0,0.1,0,0.2,0,0.3C7.9,5,6,7.3,6,10c0,1.3,0.4,2.5,1.1,3.5C5.9,14.6,5,16.2,5,18c0,2.2,1.8,4,4,4h6 c2.2,0,4-1.8,4-4c0-1.8-0.9-3.4-2.1-4.5c0.7-1,1.1-2.2,1.1-3.5c0-2.7-1.9-5-4-5.7c0-0.1,0-0.2,0-0.3C14,2.9,13.1,2,12,2z M12,4 c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S11.4,4,12,4z M9,10c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S8.4,10,9,10z M15,10 c0.6,0,1,0.4,1,1s-0.4,1-1,1s-1-0.4-1-1S14.4,10,15,10z M12,14c-1.1,0-2-0.9-2-2h4C14,13.1,13.1,14,12,14z" />
-                        </svg>
-                        {/* Visual Quack Feedback */}
-                        <motion.span
-                            initial={{ opacity: 0, y: 0, scale: 0.5 }}
-                            whileTap={{ opacity: 1, y: -20, scale: 1 }}
-                            className="absolute -top-4 -right-4 bg-white text-yellow-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm pointer-events-none"
-                        >
-                            Quack!
-                        </motion.span>
-                    </motion.div>
+                    <Image
+                        src="https://i.pinimg.com/736x/47/09/9e/47099e819a320306769438a6236f14a9.jpg"
+                        alt="My Setup"
+                        fill
+                        className="object-cover"
+                    />
                 </motion.div>
+
+                {/* 8. Education Card */}
+                <motion.div
+                    variants={item}
+                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                >
+                    <EducationCard />
+                </motion.div>
+
+                {/* 9. Yellow Folder (Windows style) */}
+                <FolderCard
+                    color="#FFC439"
+                    hoverColor="#FFD36A"
+                    label={t("academic_certificates")}
+                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                />
+
+
 
             </motion.div>
 

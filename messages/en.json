@@ -18,6 +18,26 @@
         "newsletter": "I write about Tech",
         "newsletter_desc": "Articles about architecture, design, and engineering tips.",
         "about_me_title": "About me",
-        "about_me_desc": "Software Engineer focused on creating exceptional digital experiences. I combine technical rigor with a sharp aesthetic vision to deliver solutions that truly make a difference."
+        "about_me_desc": "Software Engineer focused on creating exceptional digital experiences. I combine technical rigor with a sharp aesthetic vision to deliver solutions that truly make a difference.",
+        "academic_title": "Academic Roadmap",
+        "academic_headline": "Building a solid foundation",
+        "academic_desc": "My journey combines a practical focus on development with the analytical rigor of academic research.",
+        "academic_milestone_1_title": "Analysis and Systems Development",
+        "academic_milestone_1_institution": "FACINT College",
+        "academic_milestone_1_sub": "2023 — 2025",
+        "academic_milestone_2_title": "M.Sc. in Computer Science",
+        "academic_milestone_2_institution": "UNESP",
+        "academic_milestone_2_sub": "2026 — Present",
+        "academic_cert_msc": "MASTER'S DEGREE DIPLOMA",
+        "academic_cert_bsc": "GRADUATION DIPLOMA",
+        "academic_cert_certifies": "CERTIFIES:",
+        "academic_cert_degree_msc": "M.Sc. in Computer Science",
+        "academic_cert_degree_bsc": "Analysis and Systems Development",
+        "academic_cert_signature": "Rector's Signature",
+        "academic_name": "Gabriel Gama",
+        "academic_grade": "GPA: {grade}",
+        "academic_status_concluded": "CONCLUDED",
+        "academic_status_in_progress": "IN PROGRESS",
+        "academic_certificates": "Certificates"
     }
 }
