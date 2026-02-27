@@ -2,5 +2,22 @@
     "Index": {
         "title": "Welcome to my Portfolio",
         "description": "Explorer and Software Engineer"
+    },
+    "About": {
+        "role": "Software Engineer & Fullstack Developer",
+        "bio": "Passionate about creating beautiful interfaces and scalable systems.",
+        "location": "Brazil",
+        "projects": "My Projects",
+        "current_role": "Working as a Software Engineer Front-end Pleno at Flash",
+        "philosophy": "In 2024 I started diving deep into the React and Next.js ecosystem, building complete end-to-end solutions. You're reading this at 16px.",
+        "art": "Crafting the Web",
+        "complex_systems": "High-performance apps: Focus on the development of complex software solutions and scalable data representations.",
+        "letterforms": "Clean code is the foundation",
+        "letterforms_desc": "When I decided to dive into development, my obsession became understanding how things work under the hood. Programming has been a way to connect with the world. And building things that matter is what I always come back to in my work.",
+        "scholarship": "Quality Standards",
+        "newsletter": "I write about Tech",
+        "newsletter_desc": "Articles about architecture, design, and engineering tips.",
+        "about_me_title": "About me",
+        "about_me_desc": "Software Engineer focused on creating exceptional digital experiences. I combine technical rigor with a sharp aesthetic vision to deliver solutions that truly make a difference."
     }
 }

@@ -1,6 +1,23 @@
 {
   "Index": {
-    "title": "Bem-vindo ao meu Portfólio",
-    "description": "Explorador e Software Engineer"
+    "title": "Welcome to my Portfolio",
+    "description": "Explorer and Software Engineer"
+  },
+  "About": {
+    "role": "Engenheiro de Software & Desenvolvedor Fullstack",
+    "bio": "Apaixonado por criar interfaces bonitas e sistemas escaláveis.",
+    "location": "Brasil",
+    "projects": "Meus Projetos",
+    "current_role": "Trabalhando como Software Engineer Front-end Pleno na Flash",
+    "philosophy": "Em 2024 comecei a me aprofundar no ecossistema de React e Next.js, construindo soluções completas de ponta a ponta. Você está lendo isso a 16px.",
+    "art": "Desenvolvendo a web",
+    "complex_systems": "Aplicações de alto desempenho: Foco no desenvolvimento de soluções complexas de software e representação de dados escaláveis.",
+    "letterforms": "A base de tudo é o código limpo",
+    "letterforms_desc": "Quando eu decidi me aprofundar em desenvolvimento, minha obsessão se tornou entender como as coisas funcionam por baixo dos panos. A programação tem sido uma forma de me conectar com o mundo. E construir coisas que importam é o que sempre retorno em meu trabalho.",
+    "scholarship": "Padrões de Qualidade",
+    "newsletter": "Escrevo sobre Tecnologia",
+    "newsletter_desc": "Artigos sobre arquitetura, design, e dicas de engenharia.",
+    "about_me_title": "Sobre mim",
+    "about_me_desc": "Engenheiro de Software focado em criar experiências digitais excepcionais. Combino rigor técnico com uma visão estética apurada para entregar soluções que realmente fazem a diferença."
   }
 }

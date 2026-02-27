@@ -1,11 +1,11 @@
-import { Google_Sans_Flex } from "next/font/google";
+import localFont from "next/font/local";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Navbar } from "@/components/shared/Navbar";
 import "../globals.css";
 
-const googleSansFlex = Google_Sans_Flex({
-  subsets: ["latin"],
+const googleSansFlex = localFont({
+  src: "../fonts/GoogleSansFlex.ttf",
   variable: "--font-google",
   display: 'swap',
 });
@@ -28,7 +28,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${googleSansFlex.variable} antialiased bg-background text-foreground min-h-screen`}
+        className={`${googleSansFlex.variable} font-sans antialiased bg-background text-foreground min-h-screen`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navbar />

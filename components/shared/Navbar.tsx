@@ -7,7 +7,7 @@ import { ChevronDown, Code, Layout, Server, Download, Sparkles, Box, Github, Lin
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-    { name: "Feed", href: "/feed" },
+    { name: "Feed", href: "/" },
     {
         name: "Projects",
         href: "/projects",
