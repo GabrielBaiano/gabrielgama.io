@@ -13,7 +13,7 @@ export function AboutHeader() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left max-w-2xl mx-auto mb-16 mt-8 gap-6 justify-center"
+            className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left max-w-2xl mx-auto mb-28 mt-20 gap-6 justify-center"
         >
             <div className="w-32 h-32 md:w-36 md:h-36 shrink-0 rounded-full overflow-hidden border-[1px] border-zinc-200 dark:border-zinc-800 shadow-sm relative">
                 <Image

@@ -9,6 +9,10 @@ import { ProjectsFolderModal } from "./ProjectsFolderModal";
 import { Certificate } from "./Certificate";
 import { EducationCard } from "./EducationCard";
 import { FolderCard } from "./FolderCard";
+import { VolunteerCard } from "./VolunteerCard";
+import { PosterCard } from "./PosterCard";
+import { GithubActivityCard } from "./GithubActivityCard";
+import { LocationCard } from "./LocationCard";
 
 export function AboutGrid() {
     const t = useTranslations("About");
@@ -17,7 +21,11 @@ export function AboutGrid() {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
+        // Use a timeout to avoid synchronous state update in useEffect
+        const mountTimer = setTimeout(() => {
+            setMounted(true);
+        }, 0);
+
         const timer = setInterval(() => {
             const now = new Date();
             // Offset for Brazil (UTC-3)
@@ -26,7 +34,11 @@ export function AboutGrid() {
             const brTime = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
             setTime(brTime);
         }, 1000);
-        return () => clearInterval(timer);
+
+        return () => {
+            clearTimeout(mountTimer);
+            clearInterval(timer);
+        };
     }, []);
 
     const secondDegrees = (time.getSeconds() / 60) * 360;
@@ -199,17 +211,12 @@ export function AboutGrid() {
                     </svg>
                 </motion.a>
 
-                {/* 7. Setup Image Card (2x4) - Under Folder */}
+                {/* 7. SVG Poster Card (2x4) */}
                 <motion.div
                     variants={item}
-                    className="col-span-2 row-span-4 bg-[#F5F5F7] dark:bg-zinc-900 rounded-[24px] overflow-hidden relative aspect-[2/4]"
+                    className="col-span-2 row-span-4"
                 >
-                    <Image
-                        src="https://i.pinimg.com/736x/47/09/9e/47099e819a320306769438a6236f14a9.jpg"
-                        alt="My Setup"
-                        fill
-                        className="object-cover"
-                    />
+                    <PosterCard />
                 </motion.div>
 
                 {/* 8. Education Card */}
@@ -228,7 +235,24 @@ export function AboutGrid() {
                     className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
                 />
 
+                {/* 10. Volunteer Card */}
+                <motion.div
+                    variants={item}
+                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                >
+                    <VolunteerCard />
+                </motion.div>
 
+                {/* 11. GitHub Activity Card */}
+                <GithubActivityCard />
+
+                {/* 12. Location Card */}
+                <motion.div
+                    variants={item}
+                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                >
+                    <LocationCard />
+                </motion.div>
 
             </motion.div>
 

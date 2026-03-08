@@ -38,6 +38,9 @@
         "academic_grade": "GPA: {grade}",
         "academic_status_concluded": "CONCLUDED",
         "academic_status_in_progress": "IN PROGRESS",
-        "academic_certificates": "Certificates"
+        "academic_certificates": "Photos",
+        "volunteer_tag": "VOLUNTEER",
+        "volunteer_title": "Volunteer Teacher",
+        "volunteer_desc": "Teaching basic programming and logical thinking to youth from local NGOs, helping to democratize access to technology."
     }
 }

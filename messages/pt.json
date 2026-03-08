@@ -38,6 +38,9 @@
     "academic_grade": "Média: {grade}",
     "academic_status_concluded": "CONCLUÍDO",
     "academic_status_in_progress": "EM CURSO",
-    "academic_certificates": "Certificações"
+    "academic_certificates": "Fotos",
+    "volunteer_tag": "VOLUNTARIADO",
+    "volunteer_title": "Professor Voluntário",
+    "volunteer_desc": "Ensino programação básica e raciocínio lógico para jovens de ONGs locais, ajudando a democratizar o acesso à tecnologia."
   }
 }
