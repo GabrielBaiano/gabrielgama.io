@@ -159,25 +159,35 @@ export function AboutGrid() {
                     </svg>
                 </motion.a>
 
-                {/* 3. Orange About me Card */}
+                {/* 3. About me Card (Reference Styled - Refined) */}
                 <motion.div
                     variants={item}
-                    className="col-span-2 md:col-span-2 lg:col-span-4 row-span-2 lg:row-span-4 bg-[#F26C20] text-white rounded-[24px] p-6 md:p-8 flex flex-col shadow-sm h-full w-full justify-between relative overflow-hidden group aspect-square"
+                    className="col-span-2 md:col-span-2 lg:col-span-4 row-span-2 lg:row-span-4 bg-[#1C1C1E] text-white rounded-[24px] p-6 lg:p-8 flex flex-col shadow-sm h-full w-full justify-between relative overflow-hidden group aspect-square"
                 >
-                    <div className="relative z-10 h-full flex flex-col justify-between">
-                        <div>
-                            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight mb-4">
-                                {t("about_me_title")}
-                            </h3>
-                            <p className="text-sm md:text-base lg:text-[17px] font-medium leading-relaxed opacity-90">
-                                {t("about_me_desc")}
-                            </p>
-                        </div>
-                        <div className="flex justify-end">
-                            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                                <ArrowUpRight className="w-5 h-5" />
-                            </div>
-                        </div>
+                    {/* Top Title */}
+                    <div className="relative z-20 w-fit">
+                        <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-none text-white/95">
+                            {t("about_me_title")}
+                        </h3>
+                    </div>
+
+                    {/* Single Asterisk Graphic (Right aligned) */}
+                    <div className="absolute right-[-10%] top-[45%] -translate-y-1/2 z-10 pointer-events-none opacity-90 transition-transform group-hover:rotate-12 duration-700 ease-out">
+                        <svg viewBox="0 0 100 100" className="w-[180px] md:w-[220px] lg:w-[260px] aspect-square fill-[#BE38DE]">
+                            <g transform="translate(50, 50)">
+                                <rect x="-10" y="-45" width="20" height="90" rx="3" />
+                                <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(45)" />
+                                <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(90)" />
+                                <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(135)" />
+                            </g>
+                        </svg>
+                    </div>
+
+                    {/* Bottom Text */}
+                    <div className="relative z-20 mt-auto pointer-events-none pr-4 md:pr-12">
+                        <p className="text-[#A1A1AA] text-[15px] md:text-base font-medium leading-relaxed">
+                            {t("about_me_desc")}
+                        </p>
                     </div>
                 </motion.div>
 
