@@ -248,7 +248,7 @@ export function AboutGrid() {
                 {/* 10. Volunteer Card */}
                 <motion.div
                     variants={item}
-                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                    className="col-span-1 md:col-span-1 lg:col-span-2 row-span-1 lg:row-span-2"
                 >
                     <VolunteerCard />
                 </motion.div>
@@ -259,7 +259,7 @@ export function AboutGrid() {
                 {/* 12. Location Card */}
                 <motion.div
                     variants={item}
-                    className="col-span-1 md:col-span-1 lg:col-span-3 row-span-1 lg:row-span-2"
+                    className="col-span-1 md:col-span-1 lg:col-span-4 row-span-1 lg:row-span-2"
                 >
                     <LocationCard />
                 </motion.div>
