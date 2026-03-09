@@ -45,15 +45,12 @@ export function GithubActivityCard() {
     const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     return (
-        <motion.a
-            href="https://github.com/GabrielBaiano"
-            target="_blank"
-            rel="noopener noreferrer"
+        <motion.div
             variants={{
                 hidden: { opacity: 0, scale: 0.95, y: 20 },
                 show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
             }}
-            className="col-span-2 md:col-span-2 lg:col-span-4 row-span-2 lg:row-span-2 bg-black rounded-[24px] p-5 shadow-sm border border-[#30363D] relative overflow-hidden group flex flex-col justify-between hover:bg-zinc-900 transition-colors cursor-pointer"
+            className="col-span-2 md:col-span-2 lg:col-span-4 row-span-2 lg:row-span-2 bg-black rounded-[24px] p-5 shadow-sm border border-[#30363D] relative overflow-hidden flex flex-col justify-between transition-colors"
         >
             {/* Header matching Tesla widget style */}
             <div className="flex justify-between items-start">
@@ -113,6 +110,6 @@ export function GithubActivityCard() {
                     </div>
                 )}
             </div>
-        </motion.a>
+        </motion.div>
     );
 }
