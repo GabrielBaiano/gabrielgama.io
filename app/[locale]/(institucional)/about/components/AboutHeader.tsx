@@ -20,6 +20,7 @@ export function AboutHeader() {
                     src="/test/test-profile-pic.png"
                     alt="Gabriel Gama Profile Picture"
                     fill
+                    sizes="(max-width: 768px) 128px, 144px"
                     priority
                     className="object-cover transition-transform duration-500"
                 />
