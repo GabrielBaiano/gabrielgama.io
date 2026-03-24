@@ -41,6 +41,15 @@
     "academic_certificates": "Fotos",
     "volunteer_tag": "VOLUNTARIADO",
     "volunteer_title": "Professor Voluntário",
-    "volunteer_desc": "Ensino programação básica e raciocínio lógico para jovens de ONGs locais, ajudando a democratizar o acesso à tecnologia."
+    "volunteer_desc": "Ensino programação básica e raciocínio lógico para jovens de ONGs locais, ajudando a democratizar o acesso à tecnologia.",
+    "github_activity_title": "Atividade no Github",
+    "rabbit_hello": "olá,",
+    "rabbit_i_am": "eu sou ",
+    "contact_folder_name": "Contato",
+    "contact_folder_desc": "Minhas redes principais",
+    "social_youtube_desc": "Vídeos & Tutoriais",
+    "social_linkedin_desc": "Rede Profissional",
+    "social_github_desc": "Projetos Open Source",
+    "social_twitter_desc": "Pensamentos"
   }
 }

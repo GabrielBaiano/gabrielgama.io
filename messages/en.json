@@ -41,6 +41,15 @@
         "academic_certificates": "Photos",
         "volunteer_tag": "VOLUNTEER",
         "volunteer_title": "Volunteer Teacher",
-        "volunteer_desc": "Teaching basic programming and logical thinking to youth from local NGOs, helping to democratize access to technology."
+        "volunteer_desc": "Teaching basic programming and logical thinking to youth from local NGOs, helping to democratize access to technology.",
+        "github_activity_title": "Github Activity",
+        "rabbit_hello": "hello,",
+        "rabbit_i_am": "I am ",
+        "contact_folder_name": "Contact",
+        "contact_folder_desc": "My main social networks",
+        "social_youtube_desc": "Videos & Tutorials",
+        "social_linkedin_desc": "Professional Network",
+        "social_github_desc": "Open Source Projects",
+        "social_twitter_desc": "Thoughts"
     }
 }

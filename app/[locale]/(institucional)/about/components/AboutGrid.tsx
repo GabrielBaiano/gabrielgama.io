@@ -6,6 +6,8 @@ import { FolderCard } from "./FolderCard";
 import { ProjectsFolderModal } from "./ProjectsFolderModal";
 import { AboutMeCard } from "./AboutMeCard";
 import { GithubActivityChart } from "./GithubActivityChart";
+import { RabbitCard } from "./RabbitCard";
+import { SocialFolderCard } from "./SocialFolderCard";
 
 export function AboutGrid() {
     const t = useTranslations("About");
@@ -31,12 +33,15 @@ export function AboutGrid() {
                 </div>
             </div>
 
-            {/* Bottom Row: GitHub Activity */}
+            {/* Bottom Row: GitHub Activity + Rabbit + Social Folder */}
             <div className="flex flex-col md:flex-row gap-5 w-full">
                 <div className="w-full md:w-[440px] shrink-0">
                     <GithubActivityChart />
                 </div>
-                <div className="flex-1 hidden md:block" />
+                <div className="flex-1 flex flex-wrap gap-5 justify-center md:justify-start">
+                    <RabbitCard />
+                    <SocialFolderCard />
+                </div>
             </div>
 
             <ProjectsFolderModal
