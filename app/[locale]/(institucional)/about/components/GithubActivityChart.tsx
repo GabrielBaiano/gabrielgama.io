@@ -86,7 +86,7 @@ export function GithubActivityChart() {
     }
 
     return (
-        <div className="bg-[#EBEBEB] rounded-[24px] p-6 lg:p-7 shadow-sm w-full flex flex-col h-[280px]">
+        <div className="bg-[#EBEBEB] rounded-[24px] p-6 lg:p-7 shadow-sm w-full flex flex-col h-[280px] border-2 border-transparent hover:border-[#70A5FF] transition-colors duration-300 cursor-pointer">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2.5">

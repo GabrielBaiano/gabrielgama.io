@@ -52,8 +52,13 @@ export function FolderCard({ color, hoverColor, label, subtitle = "12 files", ch
                     <motion.div 
                         layoutId={`folder-container-${label.replace(/\s+/g, '-')}`}
                         onClick={() => setIsOpen(true)}
-                        whileHover={{ scale: 0.98 }}
-                        className="w-full h-full relative cursor-pointer drop-shadow-sm group"
+                        className="w-full h-full relative cursor-pointer drop-shadow-sm group border-2 border-transparent transition-colors duration-300 rounded-[28px]"
+                        onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLElement).style.borderColor = hoverColor;
+                        }}
+                        onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLElement).style.borderColor = 'transparent';
+                        }}
                     >
                         {/* Back Cover Tab & Body */}
                         <motion.div 
@@ -99,12 +104,12 @@ export function FolderCard({ color, hoverColor, label, subtitle = "12 files", ch
                             <motion.div
                                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                                 onClick={() => setIsOpen(false)}
-                                className="fixed inset-0 z-50 bg-stone-900/40 backdrop-blur-sm"
+                                className="fixed inset-0 z-[100] bg-stone-900/40 backdrop-blur-sm"
                             />
                             
                             {/* OPEN MODAL ARCHITECTURE: CASCADE SPIT & EAT PHYSICS */}
                             <div 
-                                className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden custom-scrollbar overscroll-none"
+                                className="fixed inset-0 z-[101] overflow-y-auto overflow-x-hidden custom-scrollbar overscroll-none"
                                 onClick={handleClose} // Clicking anywhere outside closes the folder
                             >
                                 {/* Layout wrapper */}

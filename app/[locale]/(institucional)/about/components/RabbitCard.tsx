@@ -8,8 +8,7 @@ export function RabbitCard() {
     
     return (
         <motion.div 
-            whileHover={{ scale: 1.02 }}
-            className="w-full max-w-[340px] aspect-square bg-[#FF3B00] rounded-[40px] p-2.5 flex shadow-md overflow-hidden"
+            className="w-full max-w-[340px] aspect-square bg-[#FF3B00] rounded-[40px] p-2.5 flex shadow-md overflow-hidden border-2 border-transparent hover:border-white transition-colors duration-300 cursor-pointer"
         >
             {/* Left Black Screen */}
             <div className="h-full bg-[#0A0A0A] rounded-[32px] flex-1 flex flex-col justify-between p-7 relative overflow-hidden ring-1 ring-white/5">

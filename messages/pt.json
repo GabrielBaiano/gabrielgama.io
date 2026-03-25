@@ -50,6 +50,9 @@
     "social_youtube_desc": "Vídeos & Tutoriais",
     "social_linkedin_desc": "Rede Profissional",
     "social_github_desc": "Projetos Open Source",
-    "social_twitter_desc": "Pensamentos"
+    "social_twitter_desc": "Pensamentos",
+    "current_indicator": "Atual",
+    "current_position_title": "Cargo Atual",
+    "currently_working_at": "Atualmente na {company}"
   }
 }

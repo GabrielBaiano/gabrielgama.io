@@ -52,10 +52,10 @@ export function AboutMeCard() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+                            className="fixed inset-0 z-[100] bg-black/30 backdrop-blur-sm"
                         />
                         
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+                        <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none">
                             <motion.div
                                 layoutId="about-me-card"
                                 className="bg-[#F1E5D1] text-stone-900 rounded-[24px] p-8 md:p-12 shadow-2xl w-full max-w-2xl min-h-[50vh] flex flex-col relative overflow-hidden pointer-events-auto border-2 border-[#F97316]"

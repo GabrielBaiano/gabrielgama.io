@@ -50,6 +50,9 @@
         "social_youtube_desc": "Videos & Tutorials",
         "social_linkedin_desc": "Professional Network",
         "social_github_desc": "Open Source Projects",
-        "social_twitter_desc": "Thoughts"
+        "social_twitter_desc": "Thoughts",
+        "current_indicator": "Now",
+        "current_position_title": "Current Position",
+        "currently_working_at": "Currently working at {company}"
     }
 }

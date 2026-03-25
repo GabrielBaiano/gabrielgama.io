@@ -36,7 +36,6 @@ export function SocialFolderCard() {
     return (
         <>
             <motion.div 
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(true)}
                 className="flex flex-col items-center p-2 cursor-pointer group"
             >
