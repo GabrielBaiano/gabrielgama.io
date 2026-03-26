@@ -13,19 +13,19 @@ export function AboutMeCard() {
             <motion.div
                 layoutId="about-me-card"
                 onClick={() => setIsOpen(true)}
-                className="bg-[#121212] group-hover:bg-[#F1E5D1] rounded-[28px] p-8 lg:p-10 flex flex-col shadow-sm w-full relative overflow-hidden group cursor-pointer border-2 border-transparent hover:border-[#F97316] transition-colors duration-500 min-h-[240px]"
+                className="bg-[#F1E5D1] rounded-[32px] p-8 lg:p-10 flex flex-col shadow-sm w-full relative overflow-hidden group cursor-pointer border-2 border-[#F97316]/20 hover:border-[#F97316] transition-all duration-500 min-h-[240px]"
             >
                 <div className="relative z-20 flex flex-col w-full pr-12 pb-4">
                     {/* Top Title */}
                     <motion.div layoutId="about-me-title" className="w-fit mb-4">
-                        <h3 className="text-4xl sm:text-[46px] font-bold tracking-tight leading-none text-white group-hover:text-stone-900 transition-colors duration-500">
+                        <h3 className="text-4xl sm:text-[46px] font-bold tracking-tight leading-none text-stone-900 group-hover:text-stone-950 transition-colors duration-500">
                             {t("about_me_title")}
                         </h3>
                     </motion.div>
 
                     {/* Bottom Text */}
                     <motion.div layoutId="about-me-desc" className="pointer-events-none">
-                        <p className="text-white/60 group-hover:text-[#645A50] text-[16px] font-medium leading-[1.6] transition-colors duration-500">
+                        <p className="text-[#645A50] text-[16px] font-medium leading-[1.6] transition-colors duration-500">
                             {t("about_me_desc")}
                         </p>
                     </motion.div>
@@ -33,7 +33,7 @@ export function AboutMeCard() {
 
                 {/* Small Asterisk Graphic - Top Right */}
                 <motion.div layoutId="about-me-asterisk" className="absolute right-8 top-8 z-10 pointer-events-none transition-transform group-hover:rotate-45 duration-700 ease-out">
-                    <svg viewBox="0 0 100 100" className="w-[48px] sm:w-[56px] aspect-square fill-white group-hover:fill-[#F97316] transition-colors duration-500">
+                    <svg viewBox="0 0 100 100" className="w-[48px] sm:w-[56px] aspect-square fill-[#F97316] transition-colors duration-500">
                         <g transform="translate(50, 50)">
                             <rect x="-10" y="-45" width="20" height="90" rx="3" />
                             <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(45)" />
