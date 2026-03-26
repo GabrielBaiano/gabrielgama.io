@@ -132,6 +132,7 @@ export function Navbar() {
                 : "bg-background/80 backdrop-blur-md border-b border-transparent hover:border-stone-200"
                 } ${!isVisible ? "-translate-y-full opacity-0 pointer-events-none" : "translate-y-0 opacity-100"}`}
             onMouseLeave={handleMouseLeave}
+            style={{ zoom: 1.2 }}
         >
             <div className="flex w-full items-center justify-between px-6 md:px-12 h-12 relative">
                 {/* LEFT SECTION (LOGO + NAV) */}

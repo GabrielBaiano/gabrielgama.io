@@ -21,7 +21,6 @@ interface ExperienceCardProps {
 export function ExperienceCard({ currentJob, children, className = "" }: ExperienceCardProps) {
     const t = useTranslations("About");
     const [isOpen, setIsOpen] = useState(false);
-    const [isClosing, setIsClosing] = useState(false);
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => { setMounted(true); }, []);
@@ -33,13 +32,7 @@ export function ExperienceCard({ currentJob, children, className = "" }: Experie
 
     const handleClose = (e?: React.MouseEvent) => {
         if (e) e.stopPropagation();
-        setIsClosing(true);
-        const totalItems = React.Children.count(children);
-        const waitTime = (totalItems * 60) + 400;
-        setTimeout(() => {
-            setIsOpen(false);
-            setIsClosing(false);
-        }, waitTime);
+        setIsOpen(false);
     };
 
     return (
@@ -141,7 +134,7 @@ export function ExperienceCard({ currentJob, children, className = "" }: Experie
                                         {/* Timeline Content */}
                                         <div className="px-2 pb-10">
                                             <AnimatePresence>
-                                                {!isClosing && children && React.Children.map(children, (child, index) => {
+                                                {children && React.Children.map(children, (child, index) => {
                                                     const total = React.Children.count(children);
                                                     const stagger = (index * 0.1);
                                                     const exitStagger = (total - index - 1) * 0.05;

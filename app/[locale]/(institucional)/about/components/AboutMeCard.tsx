@@ -13,18 +13,27 @@ export function AboutMeCard() {
             <motion.div
                 layoutId="about-me-card"
                 onClick={() => setIsOpen(true)}
-                className="bg-[#F1E5D1] text-stone-900 rounded-[24px] p-6 lg:p-8 flex flex-col shadow-sm w-full flex-1 min-w-[320px] justify-between relative overflow-hidden group aspect-[3/2] sm:aspect-auto sm:min-h-[226px] cursor-pointer border-2 border-transparent hover:border-[#F97316] transition-colors duration-300"
+                className="bg-[#121212] group-hover:bg-[#F1E5D1] rounded-[28px] p-8 lg:p-10 flex flex-col shadow-sm w-full relative overflow-hidden group cursor-pointer border-2 border-transparent hover:border-[#F97316] transition-colors duration-500 min-h-[240px]"
             >
-                {/* Top Title */}
-                <motion.div layoutId="about-me-title" className="relative z-20 w-fit">
-                    <h3 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-none text-stone-900">
-                        {t("about_me_title")}
-                    </h3>
-                </motion.div>
+                <div className="relative z-20 flex flex-col w-full pr-12 pb-4">
+                    {/* Top Title */}
+                    <motion.div layoutId="about-me-title" className="w-fit mb-4">
+                        <h3 className="text-4xl sm:text-[46px] font-bold tracking-tight leading-none text-white group-hover:text-stone-900 transition-colors duration-500">
+                            {t("about_me_title")}
+                        </h3>
+                    </motion.div>
 
-                {/* Single Asterisk Graphic */}
-                <motion.div layoutId="about-me-asterisk" className="absolute right-[-20px] top-[50%] -translate-y-1/2 z-10 pointer-events-none opacity-90 transition-transform group-hover:rotate-12 duration-700 ease-out">
-                    <svg viewBox="0 0 100 100" className="w-[180px] md:w-[220px] aspect-square fill-[#F97316]">
+                    {/* Bottom Text */}
+                    <motion.div layoutId="about-me-desc" className="pointer-events-none">
+                        <p className="text-white/60 group-hover:text-[#645A50] text-[16px] font-medium leading-[1.6] transition-colors duration-500">
+                            {t("about_me_desc")}
+                        </p>
+                    </motion.div>
+                </div>
+
+                {/* Small Asterisk Graphic - Top Right */}
+                <motion.div layoutId="about-me-asterisk" className="absolute right-8 top-8 z-10 pointer-events-none transition-transform group-hover:rotate-45 duration-700 ease-out">
+                    <svg viewBox="0 0 100 100" className="w-[48px] sm:w-[56px] aspect-square fill-white group-hover:fill-[#F97316] transition-colors duration-500">
                         <g transform="translate(50, 50)">
                             <rect x="-10" y="-45" width="20" height="90" rx="3" />
                             <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(45)" />
@@ -32,13 +41,6 @@ export function AboutMeCard() {
                             <rect x="-10" y="-45" width="20" height="90" rx="3" transform="rotate(135)" />
                         </g>
                     </svg>
-                </motion.div>
-
-                {/* Bottom Text */}
-                <motion.div layoutId="about-me-desc" className="relative z-20 mt-auto pointer-events-none sm:pr-[160px]">
-                    <p className="text-stone-600 text-[15px] md:text-base font-medium leading-relaxed">
-                        {t("about_me_desc")}
-                    </p>
                 </motion.div>
             </motion.div>
 
