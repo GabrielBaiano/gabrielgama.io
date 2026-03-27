@@ -110,9 +110,9 @@ export default function InstitucionalHomePage() {
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
   // Video animations
-  const videoScale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-  const videoY = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
+  const videoScale = useTransform(scrollYProgress, [0, 0.3], [0.75, 1]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  const videoY = useTransform(scrollYProgress, [0, 0.3], [40, 0]);
   const springVideoScale = useSpring(videoScale, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
