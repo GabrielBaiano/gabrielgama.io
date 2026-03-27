@@ -35,10 +35,16 @@ export default function InstitucionalHomePage() {
     offset: ["start start", "end end"]
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.4], [0.85, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.4], [100, 0]);
-  const springScale = useSpring(scale, { stiffness: 100, damping: 20 });
+  // Hero animations
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.95]);
+  const heroY = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+
+  // Video animations
+  const videoScale = useTransform(scrollYProgress, [0.1, 0.6], [0.85, 1]);
+  const videoOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
+  const videoY = useTransform(scrollYProgress, [0.1, 0.6], [100, 0]);
+  const springVideoScale = useSpring(videoScale, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
     if (currentLineIndex >= lines.length) {
@@ -78,7 +84,10 @@ export default function InstitucionalHomePage() {
   return (
     <div ref={containerRef} className="relative w-full bg-background selection:bg-stone-200">
       {/* HERO SECTION */}
-      <section className="flex h-screen flex-col items-center justify-center p-6 text-center overflow-hidden sticky top-0">
+      <motion.section 
+        style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+        className="flex h-screen flex-col items-center justify-center p-6 text-center overflow-hidden"
+      >
         <h1 className="max-w-[95vw] w-full text-4xl font-medium tracking-[-0.05em] text-stone-900 md:text-7xl lg:text-8xl leading-[1.0] font-sans mb-12">
           {lines.map((line, i) => (
             <div key={i} className="relative block h-[1.1em] flex justify-center items-center">
@@ -151,12 +160,12 @@ export default function InstitucionalHomePage() {
             {t("hero_secondary_button")}
           </Link>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* SCROLL REVEAL VIDEO SECTION */}
       <section className="relative min-h-screen flex flex-col items-center justify-center p-6 md:p-12 z-20 gap-16">
         <motion.div 
-          style={{ scale: springScale, opacity, y }}
+          style={{ scale: springVideoScale, opacity: videoOpacity, y: videoY }}
           className="relative w-full max-w-6xl aspect-video bg-black rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
         >
           <div className="absolute inset-0 bg-stone-900/50" />
@@ -177,7 +186,7 @@ export default function InstitucionalHomePage() {
 
         {/* DOCK */}
         <motion.div
-          style={{ opacity, y: useTransform(scrollYProgress, [0.3, 0.6], [50, 0]) }}
+          style={{ opacity: videoOpacity, y: useTransform(scrollYProgress, [0.3, 0.7], [50, 0]) }}
           className="flex items-center gap-2 p-3 bg-stone-100/40 backdrop-blur-2xl rounded-3xl border border-stone-200/50 shadow-2xl"
         >
           {dockIcons.map((item, index) => (
@@ -193,8 +202,8 @@ export default function InstitucionalHomePage() {
         </motion.div>
       </section>
       
-      {/* Spacer to allow scrolling */}
-      <div className="h-[50vh]" />
+      {/* Final Spacer */}
+      <div className="h-[40vh]" />
     </div>
   );
 }
