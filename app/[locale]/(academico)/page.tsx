@@ -369,11 +369,11 @@ export default function InstitucionalHomePage() {
           </p>
         </div>
 
-        <div className="relative w-full max-w-7xl mx-auto px-6 overflow-hidden">
+        <div className="relative w-full overflow-hidden">
           <motion.div 
-            animate={{ x: `calc(-${activeIndex * 100}% - ${activeIndex * 2}rem)` }}
+            animate={{ x: -activeIndex * 832 }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            className="flex gap-8"
+            className="flex gap-8 pl-6 md:pl-[calc((100vw-80rem)/2+1.5rem)]"
           >
             {projects.map((project, i) => (
               <ProjectCard key={i} project={project} />
@@ -381,7 +381,7 @@ export default function InstitucionalHomePage() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 space-y-6">
+        <div className="max-w-7xl mx-auto px-6 space-y-6 mt-12">
           <div className="flex items-center gap-6">
             <h3 className="text-2xl font-bold text-stone-900">
               {projects[activeIndex].title}
