@@ -155,7 +155,7 @@ export default function InstitucionalHomePage() {
       {/* HERO SECTION */}
       <motion.section 
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="flex h-[85vh] flex-col items-center justify-center p-6 text-center overflow-hidden"
+        className="flex h-screen flex-col items-center justify-center p-6 text-center overflow-hidden"
       >
         <h1 className="max-w-[95vw] w-full text-4xl font-medium tracking-[-0.05em] text-stone-900 md:text-7xl lg:text-8xl leading-[1.0] font-sans mb-12">
           {lines.map((line, i) => (
@@ -171,7 +171,7 @@ export default function InstitucionalHomePage() {
                 )}
               </div>
 
-              <div className="absolute inset-0 flex justify-center items-center whitespace-nowrap">
+              <div className="absolute inset-0 flex justify-center items-center whitespace-nowrap text-center">
                 {i <= currentLineIndex && (
                   <>
                     {line.split(/(Gama)/g).map((part, partIndex) => {
@@ -190,15 +190,11 @@ export default function InstitucionalHomePage() {
                       return <span key={partIndex}>{partInTyped}</span>;
                     })}
                     
-                    {(i < currentLineIndex || (i === currentLineIndex && currentCharIndex <= lines[i].length)) && (
+                    {((!isFinished && i === currentLineIndex) || (isFinished && i === lines.length - 1)) && (
                       <motion.span
                         animate={{ opacity: [1, 0] }}
                         transition={{ repeat: Infinity, duration: 0.8 }}
-                        className={`inline-block w-[4px] h-[0.9em] bg-stone-900 translate-y-[0.1em] ml-1 ${
-                          (isFinished && i === lines.length - 1) || (!isFinished && i === currentLineIndex) 
-                            ? "opacity-100" 
-                            : "opacity-0"
-                        }`}
+                        className="inline-block w-[4px] h-[0.9em] bg-stone-900 translate-y-[0.1em] ml-1"
                       />
                     )}
                   </>
@@ -273,7 +269,7 @@ export default function InstitucionalHomePage() {
 
       {/* AGENTIC ERA FEATURE SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-32 space-y-32">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
             <TypingText text={t("agentic_era_title")} />
           </h2>
