@@ -36,14 +36,14 @@ export default function InstitucionalHomePage() {
   });
 
   // Hero animations
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.4], [1, 0.95]);
-  const heroY = useTransform(scrollYProgress, [0, 0.4], [0, -50]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.95]);
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
   // Video animations
-  const videoScale = useTransform(scrollYProgress, [0.1, 0.6], [0.85, 1]);
-  const videoOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
-  const videoY = useTransform(scrollYProgress, [0.1, 0.6], [100, 0]);
+  const videoScale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
+  const videoOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  const videoY = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
   const springVideoScale = useSpring(videoScale, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
