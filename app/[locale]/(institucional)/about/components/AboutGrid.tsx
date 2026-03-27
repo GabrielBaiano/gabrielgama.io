@@ -1,10 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { FolderCard } from "./FolderCard";
 import { AboutMeCard } from "./AboutMeCard";
 import { VideoWidget } from "./VideoWidget";
-import { GithubActivityChart } from "./GithubActivityChart";
 import { RabbitCard } from "./RabbitCard";
 import { WorkHistoryWidget } from "./WorkHistoryWidget";
 

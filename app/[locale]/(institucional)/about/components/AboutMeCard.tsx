@@ -60,7 +60,7 @@ export function AboutMeCard() {
                         <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 pointer-events-none">
                             <motion.div
                                 layoutId="about-me-card"
-                                className="bg-[#F1E5D1] text-stone-900 rounded-[24px] p-8 md:p-12 shadow-2xl w-full max-w-2xl min-h-[50vh] flex flex-col relative overflow-hidden pointer-events-auto border-2 border-[#F97316]"
+                                className="bg-[#F1E5D1] text-stone-900 rounded-[32px] p-8 md:p-12 shadow-2xl w-full max-w-2xl min-h-[50vh] flex flex-col relative overflow-hidden pointer-events-auto border-2 border-[#F97316]"
                             >
                                 <motion.div layoutId="about-me-title" className="relative z-20 mb-8 pr-12">
                                     <h3 className="text-4xl md:text-5xl font-semibold tracking-tight leading-none text-stone-900">

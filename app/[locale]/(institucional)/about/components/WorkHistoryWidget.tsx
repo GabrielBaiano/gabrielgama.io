@@ -19,7 +19,7 @@ export function WorkHistoryWidget() {
     const visibleItems = WORK_ITEMS.slice(0, 6);
 
     return (
-        <SmartWidget className="bg-[#121212] !p-6 flex flex-col h-full border-none shadow-2xl overflow-hidden">
+        <SmartWidget className="bg-[#0047FF] !p-6 flex flex-col h-full border-none shadow-2xl overflow-hidden">
             <div className="flex flex-col gap-2 flex-1">
                 {visibleItems.map((item, idx) => (
                     <motion.a

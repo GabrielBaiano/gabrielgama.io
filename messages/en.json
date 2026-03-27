@@ -1,7 +1,8 @@
 {
     "Index": {
         "title": "Welcome to my Portfolio",
-        "description": "Explorer and Software Engineer"
+        "description": "Explorer and Software Engineer",
+        "hero_title": "Gabriel Gama\nFrontend Developer"
     },
     "About": {
         "role": "Software Engineer & Fullstack Developer",
