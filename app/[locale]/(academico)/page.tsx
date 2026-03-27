@@ -219,7 +219,7 @@ export default function InstitucionalHomePage() {
             className="group flex items-center gap-2 rounded-full bg-stone-900 px-8 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-black hover:shadow-xl active:scale-[0.98]"
           >
             {t("hero_primary_button")}
-            <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
           <Link
             href="/about"
