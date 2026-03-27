@@ -381,12 +381,12 @@ export default function InstitucionalHomePage() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 space-y-6 mt-12">
-          <div className="flex items-center gap-6">
+        <div className="max-w-7xl mx-auto px-6 space-y-4 mt-8">
+          <div className="flex items-center justify-between max-w-[800px]">
             <h3 className="text-2xl font-bold text-stone-900">
               {projects[activeIndex].title}
             </h3>
-            <div className="flex gap-3">
+            <div className="flex gap-3 pr-2">
               <button 
                 onClick={prevProject}
                 className="p-1.5 rounded-full bg-stone-50 border border-stone-100 hover:bg-stone-100 transition-colors"
@@ -408,7 +408,7 @@ export default function InstitucionalHomePage() {
             {projects[activeIndex].description}
           </p>
           
-          <div className="pt-4">
+          <div className="pt-2">
             <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
               {t("showcase_view_case")}
               <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
