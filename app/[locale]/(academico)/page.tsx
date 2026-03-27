@@ -141,6 +141,16 @@ function ProjectCard({ project, t }: { project: any; t: any }) {
   );
 }
 
+const noScrollbarStyles = `
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`;
+
 export default function InstitucionalHomePage() {
   const t = useTranslations("Index");
   const fullText = t("hero_title");
