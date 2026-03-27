@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import { 
   User, 
@@ -19,6 +19,75 @@ import {
   Zap,
   Search
 } from "lucide-react";
+
+function TypingText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [isStarted, setIsStarted] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+
+  useEffect(() => {
+    if (isInView) {
+      const timeout = setTimeout(() => setIsStarted(true), delay);
+      return () => clearTimeout(timeout);
+    }
+  }, [isInView, delay]);
+
+  useEffect(() => {
+    if (isStarted && displayedText.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, displayedText.length + 1));
+      }, 15 + Math.random() * 20);
+      return () => clearTimeout(timeout);
+    }
+  }, [isStarted, displayedText, text]);
+
+  return (
+    <span ref={ref} className={className}>
+      {displayedText}
+      {isStarted && displayedText.length < text.length && (
+        <motion.span
+          animate={{ opacity: [1, 0] }}
+          transition={{ repeat: Infinity, duration: 0.8 }}
+          className="inline-block w-[2px] h-[1em] bg-stone-900 ml-1 translate-y-[0.1em]"
+        />
+      )}
+    </span>
+  );
+}
+
+function CodeWindow() {
+  return (
+    <div className="w-full bg-white rounded-3xl border border-stone-200 shadow-2xl overflow-hidden font-mono text-[13px] leading-relaxed">
+      <div className="flex items-center gap-2 px-4 py-3 bg-stone-50 border-b border-stone-200">
+        <div className="flex gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+          <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+          <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+        </div>
+        <div className="text-[11px] text-stone-400 ml-2">LoginButton.tsx</div>
+      </div>
+      <div className="p-6 overflow-x-auto">
+        <pre className="text-stone-800">
+          <code>
+            <span className="text-purple-500">import</span> Link <span className="text-purple-500">from</span> <span className="text-emerald-600">'next/link'</span>;<br /><br />
+            <span className="text-purple-500">export default function</span> <span className="text-blue-600">LoginButton</span>() &#123;<br />
+            &nbsp;&nbsp;<span className="text-purple-500">return</span> (<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span className="text-blue-600">Link</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;href=<span className="text-emerald-600">"/api/auth/login"</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;className=<span className="text-emerald-600">"rounded-full bg-orange-500..."</span><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login with Strava<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span className="text-blue-600">Link</span>&gt;<br />
+            &nbsp;&nbsp;);<br />
+            &#125;
+          </code>
+        </pre>
+      </div>
+    </div>
+  );
+}
+
 
 export default function InstitucionalHomePage() {
   const t = useTranslations("Index");
@@ -200,6 +269,52 @@ export default function InstitucionalHomePage() {
             </motion.div>
           ))}
         </motion.div>
+      </section>
+
+      {/* AGENTIC ERA FEATURE SECTION */}
+      <section className="max-w-7xl mx-auto px-6 py-32 space-y-32">
+        <div className="max-w-4xl">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
+            <TypingText text={t("agentic_era_title")} />
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-medium text-stone-900">
+                <TypingText text={t("agentic_era_subtitle")} delay={1000} />
+              </h3>
+              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
+                <TypingText text={t("agentic_era_description")} delay={1500} />
+              </p>
+            </div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 2.5 }}
+              className="flex items-center gap-4 pt-4"
+            >
+              <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
+                <Zap className="w-5 h-5 text-amber-500" />
+              </div>
+              <div>
+                <div className="text-sm font-medium text-stone-900">Next-gen Performance</div>
+                <div className="text-xs text-stone-500 italic">Optimized for search engine visibility and user experience</div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <CodeWindow />
+          </motion.div>
+        </div>
       </section>
       
       {/* Final Spacer */}

@@ -4,7 +4,10 @@
         "description": "Explorer and Software Engineer",
         "hero_title": "Gabriel Gama\nFrontend Developer",
         "hero_primary_button": "Explore Projects",
-        "hero_secondary_button": "See more"
+        "hero_secondary_button": "See more",
+        "agentic_era_title": "Gabriel Gama is a frontend developer, building premium digital experiences for the modern web.",
+        "agentic_era_subtitle": "An AI-First Approach",
+        "agentic_era_description": "My focus is on creating high-performance, accessible, and visually stunning web applications using the latest technologies like Next.js, Framer Motion, and Tailwind CSS."
     },
     "About": {
         "role": "Software Engineer & Fullstack Developer",
