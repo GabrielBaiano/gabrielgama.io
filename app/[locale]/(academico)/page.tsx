@@ -92,50 +92,46 @@ function CodeWindow() {
 
 function ProjectCard({ project, t }: { project: any; t: any }) {
   return (
-    <div className="min-w-[300px] md:min-w-[600px] space-y-6 group cursor-pointer">
+    <div className="min-w-[400px] md:min-w-[800px] space-y-6 group cursor-pointer">
       <motion.div 
-        whileHover={{ scale: 1.02 }}
-        className="relative aspect-[16/10] bg-stone-100 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-200/50"
+        whileHover={{ scale: 1.01 }}
+        className="relative aspect-[16/10] bg-stone-100 rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 border border-stone-100"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {/* Placeholder for project image/video */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
+        
+        {/* Placeholder for project media */}
         <div className="absolute inset-0 flex items-center justify-center bg-stone-50">
-          <Layers className="w-12 h-12 text-stone-200" />
+          <Layers className="w-16 h-16 text-stone-100" />
         </div>
         
-        <div className="absolute bottom-8 left-8 z-20">
-          <h4 className="text-2xl font-medium text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+        {/* Title Overlay - Large and Persistent */}
+        <div className="absolute bottom-12 left-12 z-20">
+          <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight leading-tight max-w-sm">
             {project.title}
           </h4>
         </div>
         
-        <div className="absolute bottom-8 right-8 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <div className="bg-white/20 backdrop-blur-md rounded-full p-3 border border-white/20">
-            <ArrowRight className="w-6 h-6 text-white" />
+        {/* Hover Arrow */}
+        <div className="absolute bottom-12 right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+          <div className="bg-white/10 backdrop-blur-xl rounded-full p-4 border border-white/20">
+            <ArrowRight className="w-8 h-8 text-white" />
           </div>
         </div>
       </motion.div>
 
-      <div className="space-y-4">
-        <div className="flex items-center justify-between group/info">
-          <div className="space-y-1">
-            <h4 className="text-xl font-medium text-stone-900">{project.title}</h4>
-            <p className="text-stone-500 text-sm max-w-md line-clamp-2">{project.description}</p>
-          </div>
-          <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button className="p-2 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-              <ChevronLeft className="w-4 h-4 text-stone-400" />
-            </button>
-            <button className="p-2 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-              <ChevronRight className="w-4 h-4 text-stone-400" />
-            </button>
-          </div>
-        </div>
-        
-        <Link href="/projects" className="inline-flex items-center gap-2 text-stone-400 font-medium hover:text-stone-900 transition-colors text-sm group/link">
+      <div className="flex items-center justify-between px-2">
+        <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
           {t("showcase_view_case")}
           <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
         </Link>
+        <div className="flex gap-4">
+          <button className="p-3 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+            <ChevronLeft className="w-5 h-5 text-stone-400" />
+          </button>
+          <button className="p-3 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+            <ChevronRight className="w-5 h-5 text-stone-400" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -167,18 +163,9 @@ export default function InstitucionalHomePage() {
   });
 
   const projects = [
-    {
-      title: "Antigravity AI IDE",
-      description: "A next-generation development platform focused on agent-first workflows and intelligent code generation.",
-    },
-    {
-      title: "Stellar Dashboard",
-      description: "High-performance data visualization platform for enterprise infrastructure monitoring.",
-    },
-    {
-      title: "Lumina Design System",
-      description: "A comprehensive, motion-centric design system for building premium user interfaces at scale.",
-    }
+    { title: "Frontend developer" },
+    { title: "Product Designer" },
+    { title: "System Architect" },
   ];
 
   // Hero animations
