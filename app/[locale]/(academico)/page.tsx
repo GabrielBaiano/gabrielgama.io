@@ -92,27 +92,15 @@ function CodeWindow() {
 
 function ProjectCard({ project }: { project: any }) {
   return (
-    <div className="min-w-[320px] md:min-w-[1100px] space-y-6 group cursor-pointer">
+    <div className="min-w-[320px] md:min-w-[800px] flex-shrink-0">
       <motion.div 
-        whileHover={{ scale: 1.01 }}
-        className="relative aspect-[16/10] bg-stone-100 rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 border border-stone-100"
+        className={`relative aspect-[16/9] ${project.color} rounded-[3rem] overflow-hidden shadow-sm border border-stone-100`}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-60" />
         
         <div className="absolute inset-0 flex items-center justify-center bg-stone-50">
+          {/* Placeholder for image or icon if needed */}
           <Layers className="w-16 h-16 text-stone-100" />
-        </div>
-        
-        <div className="absolute bottom-12 left-12 z-20">
-          <h4 className="text-4xl md:text-6xl font-medium text-white tracking-tight leading-tight max-w-lg">
-            {project.title}
-          </h4>
-        </div>
-        
-        <div className="absolute bottom-12 right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-          <div className="bg-white/10 backdrop-blur-xl rounded-full p-4 border border-white/20">
-            <ArrowRight className="w-8 h-8 text-white" />
-          </div>
         </div>
       </motion.div>
     </div>
@@ -137,6 +125,7 @@ export default function InstitucionalHomePage() {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -145,10 +134,25 @@ export default function InstitucionalHomePage() {
   });
 
   const projects = [
-    { title: "Frontend developer" },
-    { title: "Product Designer" },
-    { title: "System Architect" },
+    { 
+      title: "Frontend developer", 
+      description: "Streamline UX development by leveraging browser-in-the-loop agents to automate repetitive tasks.",
+      color: "bg-indigo-500/10"
+    },
+    { 
+      title: "Product Designer", 
+      description: "Crafting intuitive and aesthetically pleasing interfaces for a global audience.",
+      color: "bg-rose-500/10"
+    },
+    { 
+      title: "System Architect", 
+      description: "Building scalable and resilient backends that support high-performance web applications.",
+      color: "bg-emerald-500/10"
+    },
   ];
+
+  const nextProject = () => setActiveIndex((prev) => (prev + 1) % projects.length);
+  const prevProject = () => setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
 
   // Hero animations
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
@@ -353,25 +357,48 @@ export default function InstitucionalHomePage() {
           </p>
         </div>
 
-        <div className="flex gap-8 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] pb-12 no-scrollbar">
-          {projects.map((project, i) => (
-            <ProjectCard key={i} project={project} />
-          ))}
+        <div className="relative w-full max-w-7xl mx-auto px-6 overflow-hidden">
+          <motion.div 
+            animate={{ x: `calc(-${activeIndex * 100}% - ${activeIndex * 2}rem)` }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="flex gap-8"
+          >
+            {projects.map((project, i) => (
+              <ProjectCard key={i} project={project} />
+            ))}
+          </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
-            {t("showcase_view_case")}
-            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-          </Link>
-          <div className="flex gap-4">
-            <button className="p-4 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-              <ChevronLeft className="w-6 h-6 text-stone-400" />
-            </button>
-            <button className="p-4 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-              <ChevronRight className="w-6 h-6 text-stone-400" />
-            </button>
+        <div className="max-w-7xl mx-auto px-6 space-y-8">
+          <div className="flex items-start justify-between">
+            <div className="space-y-4 max-w-2xl">
+              <h3 className="text-3xl font-medium text-stone-900">
+                {projects[activeIndex].title}
+              </h3>
+              <p className="text-xl text-stone-500 leading-relaxed">
+                {projects[activeIndex].description}
+              </p>
+            </div>
+            <div className="flex gap-4">
+              <button 
+                onClick={prevProject}
+                className="p-4 rounded-full border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors shadow-sm"
+              >
+                <ChevronLeft className="w-6 h-6 text-stone-400" />
+              </button>
+              <button 
+                onClick={nextProject}
+                className="p-4 rounded-full border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors shadow-sm"
+              >
+                <ChevronRight className="w-6 h-6 text-stone-400" />
+              </button>
+            </div>
           </div>
+          
+          <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-lg group/link">
+            {t("showcase_view_case")}
+            <ArrowRight className="w-5 h-5 transition-transform group-hover/link:translate-x-1" />
+          </Link>
         </div>
       </section>
       
