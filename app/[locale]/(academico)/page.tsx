@@ -273,7 +273,7 @@ export default function InstitucionalHomePage() {
 
       {/* AGENTIC ERA FEATURE SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-32 space-y-32">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
             <TypingText text={t("agentic_era_title")} />
           </h2>
