@@ -94,13 +94,25 @@ function ProjectCard({ project }: { project: any }) {
   return (
     <div className="min-w-[320px] md:min-w-[800px] flex-shrink-0">
       <motion.div 
-        className={`relative aspect-[16/9] ${project.color} rounded-[3rem] overflow-hidden shadow-sm border border-stone-100`}
+        className={`relative aspect-[16/9] ${project.color} rounded-[3rem] overflow-hidden border border-stone-100/50 shadow-sm transition-all duration-700`}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10" />
         
-        <div className="absolute inset-0 flex items-center justify-center bg-stone-50">
-          {/* Placeholder for image or icon if needed */}
-          <Layers className="w-16 h-16 text-stone-100" />
+        {/* Large Title Overlay with Typing Effect */}
+        <div className="absolute bottom-12 left-12 z-20">
+          <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight leading-tight max-w-lg">
+            <TypingText text={project.title} />
+          </h4>
+        </div>
+
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Layers className="w-16 h-16 text-stone-300/20" />
+        </div>
+        
+        <div className="absolute bottom-8 right-8 z-20">
+          <div className="bg-white/10 backdrop-blur-md rounded-full p-2.5 border border-white/10">
+            <Play className="w-5 h-5 text-white/50" />
+          </div>
         </div>
       </motion.div>
     </div>
@@ -369,36 +381,39 @@ export default function InstitucionalHomePage() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 space-y-8">
-          <div className="flex items-start justify-between">
-            <div className="space-y-4 max-w-2xl">
-              <h3 className="text-3xl font-medium text-stone-900">
-                {projects[activeIndex].title}
-              </h3>
-              <p className="text-xl text-stone-500 leading-relaxed">
-                {projects[activeIndex].description}
-              </p>
-            </div>
-            <div className="flex gap-4">
+        <div className="max-w-7xl mx-auto px-6 space-y-6">
+          <div className="flex items-center gap-6">
+            <h3 className="text-2xl font-bold text-stone-900">
+              {projects[activeIndex].title}
+            </h3>
+            <div className="flex gap-3">
               <button 
                 onClick={prevProject}
-                className="p-4 rounded-full border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors shadow-sm"
+                className="p-1.5 rounded-full bg-stone-50 border border-stone-100 hover:bg-stone-100 transition-colors"
+                aria-label="Previous project"
               >
-                <ChevronLeft className="w-6 h-6 text-stone-400" />
+                <ChevronLeft className="w-4 h-4 text-stone-600" />
               </button>
               <button 
                 onClick={nextProject}
-                className="p-4 rounded-full border border-stone-100 bg-stone-50/50 hover:bg-stone-100 transition-colors shadow-sm"
+                className="p-1.5 rounded-full bg-stone-50 border border-stone-100 hover:bg-stone-100 transition-colors"
+                aria-label="Next project"
               >
-                <ChevronRight className="w-6 h-6 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-stone-600" />
               </button>
             </div>
           </div>
           
-          <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-lg group/link">
-            {t("showcase_view_case")}
-            <ArrowRight className="w-5 h-5 transition-transform group-hover/link:translate-x-1" />
-          </Link>
+          <p className="text-lg text-stone-500 max-w-2xl leading-relaxed">
+            {projects[activeIndex].description}
+          </p>
+          
+          <div className="pt-4">
+            <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
+              {t("showcase_view_case")}
+              <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </section>
       
