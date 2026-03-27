@@ -2,7 +2,9 @@
   "Index": {
     "title": "Welcome to my Portfolio",
     "description": "Explorer and Software Engineer",
-    "hero_title": "Gabriel Gama\nDesenvolvedor Frontend"
+    "hero_title": "Gabriel Gama\nDesenvolvedor Frontend",
+    "hero_primary_button": "Explorar Projetos",
+    "hero_secondary_button": "Ver mais"
   },
   "About": {
     "role": "Engenheiro de Software & Desenvolvedor Fullstack",
