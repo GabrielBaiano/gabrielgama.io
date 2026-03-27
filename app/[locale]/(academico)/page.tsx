@@ -86,7 +86,7 @@ export default function InstitucionalHomePage() {
       {/* HERO SECTION */}
       <motion.section 
         style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="flex h-screen flex-col items-center justify-center p-6 text-center overflow-hidden"
+        className="flex h-[85vh] flex-col items-center justify-center p-6 text-center overflow-hidden"
       >
         <h1 className="max-w-[95vw] w-full text-4xl font-medium tracking-[-0.05em] text-stone-900 md:text-7xl lg:text-8xl leading-[1.0] font-sans mb-12">
           {lines.map((line, i) => (
@@ -163,7 +163,7 @@ export default function InstitucionalHomePage() {
       </motion.section>
 
       {/* SCROLL REVEAL VIDEO SECTION */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center p-6 md:p-12 z-20 gap-16">
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 gap-16">
         <motion.div 
           style={{ scale: springVideoScale, opacity: videoOpacity, y: videoY }}
           className="relative w-full max-w-6xl aspect-video bg-black rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
