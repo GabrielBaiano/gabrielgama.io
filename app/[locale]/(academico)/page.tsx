@@ -393,6 +393,7 @@ export default function InstitucionalHomePage() {
       
       {/* Final Spacer */}
       <div className="h-[40vh]" />
+      <style dangerouslySetInnerHTML={{ __html: noScrollbarStyles }} />
     </div>
   );
 }
