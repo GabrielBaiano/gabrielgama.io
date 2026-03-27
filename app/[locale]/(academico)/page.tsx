@@ -90,49 +90,31 @@ function CodeWindow() {
   );
 }
 
-function ProjectCard({ project, t }: { project: any; t: any }) {
+function ProjectCard({ project }: { project: any }) {
   return (
-    <div className="min-w-[400px] md:min-w-[800px] space-y-6 group cursor-pointer">
+    <div className="min-w-[320px] md:min-w-[1100px] space-y-6 group cursor-pointer">
       <motion.div 
         whileHover={{ scale: 1.01 }}
         className="relative aspect-[16/10] bg-stone-100 rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 border border-stone-100"
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-60 group-hover:opacity-80 transition-opacity duration-700" />
         
-        {/* Placeholder for project media */}
         <div className="absolute inset-0 flex items-center justify-center bg-stone-50">
           <Layers className="w-16 h-16 text-stone-100" />
         </div>
         
-        {/* Title Overlay - Large and Persistent */}
         <div className="absolute bottom-12 left-12 z-20">
-          <h4 className="text-4xl md:text-5xl font-medium text-white tracking-tight leading-tight max-w-sm">
+          <h4 className="text-4xl md:text-6xl font-medium text-white tracking-tight leading-tight max-w-lg">
             {project.title}
           </h4>
         </div>
         
-        {/* Hover Arrow */}
         <div className="absolute bottom-12 right-12 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
           <div className="bg-white/10 backdrop-blur-xl rounded-full p-4 border border-white/20">
             <ArrowRight className="w-8 h-8 text-white" />
           </div>
         </div>
       </motion.div>
-
-      <div className="flex items-center justify-between px-2">
-        <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
-          {t("showcase_view_case")}
-          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-        </Link>
-        <div className="flex gap-4">
-          <button className="p-3 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-            <ChevronLeft className="w-5 h-5 text-stone-400" />
-          </button>
-          <button className="p-3 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
-            <ChevronRight className="w-5 h-5 text-stone-400" />
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
@@ -373,8 +355,23 @@ export default function InstitucionalHomePage() {
 
         <div className="flex gap-8 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] pb-12 no-scrollbar">
           {projects.map((project, i) => (
-            <ProjectCard key={i} project={project} t={t} />
+            <ProjectCard key={i} project={project} />
           ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <Link href="/projects" className="inline-flex items-center gap-2 text-stone-900 font-medium hover:underline transition-all text-base group/link">
+            {t("showcase_view_case")}
+            <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+          </Link>
+          <div className="flex gap-4">
+            <button className="p-4 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+              <ChevronLeft className="w-6 h-6 text-stone-400" />
+            </button>
+            <button className="p-4 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+              <ChevronRight className="w-6 h-6 text-stone-400" />
+            </button>
+          </div>
         </div>
       </section>
       
