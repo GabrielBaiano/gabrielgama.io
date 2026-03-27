@@ -194,7 +194,7 @@ export default function InstitucionalHomePage() {
       </section>
       
       {/* Spacer to allow scrolling */}
-      <div className="h-[20vh]" />
+      <div className="h-[50vh]" />
     </div>
   );
 }
