@@ -228,10 +228,10 @@ export default function InstitucionalHomePage() {
       </motion.section>
 
       {/* SCROLL REVEAL VIDEO SECTION */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 gap-16">
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 overflow-visible">
         <motion.div 
           style={{ scale: springVideoScale, opacity: videoOpacity, y: videoY }}
-          className="relative w-full max-w-6xl aspect-video bg-black rounded-[2.5rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
+          className="relative w-full max-w-7xl aspect-video bg-black rounded-[3rem] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.3)]"
         >
           <div className="absolute inset-0 bg-stone-900/50" />
           <iframe 
@@ -247,23 +247,6 @@ export default function InstitucionalHomePage() {
               <Play className="w-6 h-6 text-white fill-white" />
             </div>
           </div>
-        </motion.div>
-
-        {/* DOCK */}
-        <motion.div
-          style={{ opacity: videoOpacity, y: useTransform(scrollYProgress, [0.3, 0.7], [50, 0]) }}
-          className="flex items-center gap-2 p-3 bg-stone-100/40 backdrop-blur-2xl rounded-3xl border border-stone-200/50 shadow-2xl"
-        >
-          {dockIcons.map((item, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ y: -8, scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className={`p-3 rounded-2xl bg-white shadow-sm cursor-pointer border border-stone-200/50 hover:shadow-md transition-shadow group`}
-            >
-              <item.icon className={`w-6 h-6 ${item.color} group-hover:brightness-110 transition-all`} />
-            </motion.div>
-          ))}
         </motion.div>
       </section>
 
