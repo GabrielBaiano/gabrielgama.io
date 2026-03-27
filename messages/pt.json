@@ -7,7 +7,10 @@
     "hero_secondary_button": "Ver mais",
     "agentic_era_title": "Gabriel Gama é um desenvolvedor frontend, criando experiências digitais premium para a web moderna.",
     "agentic_era_subtitle": "Foco em IA e Performance",
-    "agentic_era_description": "Meu objetivo é criar aplicações web de alta performance, acessíveis e visualmente impressionantes usando tecnologias modernas como Next.js, Framer Motion e Tailwind CSS."
+    "agentic_era_description": "Meu objetivo é criar aplicações web de alta performance, acessíveis e visualmente impressionantes usando tecnologias modernas como Next.js, Framer Motion e Tailwind CSS.",
+    "showcase_title": "Moldando o futuro da interação digital",
+    "showcase_description": "Uma coleção de projetos onde combinei design, performance e tecnologias frontend de ponta para resolver problemas complexos e entregar experiências excepcionais.",
+    "showcase_view_case": "Ver caso"
   },
   "About": {
     "role": "Engenheiro de Software & Desenvolvedor Fullstack",

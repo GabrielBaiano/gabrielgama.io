@@ -17,7 +17,9 @@ import {
   BarChart3, 
   Compass, 
   Zap,
-  Search
+  Search,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 function TypingText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
@@ -88,6 +90,56 @@ function CodeWindow() {
   );
 }
 
+function ProjectCard({ project, t }: { project: any; t: any }) {
+  return (
+    <div className="min-w-[300px] md:min-w-[600px] space-y-6 group cursor-pointer">
+      <motion.div 
+        whileHover={{ scale: 1.02 }}
+        className="relative aspect-[16/10] bg-stone-100 rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-stone-200/50"
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Placeholder for project image/video */}
+        <div className="absolute inset-0 flex items-center justify-center bg-stone-50">
+          <Layers className="w-12 h-12 text-stone-200" />
+        </div>
+        
+        <div className="absolute bottom-8 left-8 z-20">
+          <h4 className="text-2xl font-medium text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+            {project.title}
+          </h4>
+        </div>
+        
+        <div className="absolute bottom-8 right-8 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="bg-white/20 backdrop-blur-md rounded-full p-3 border border-white/20">
+            <ArrowRight className="w-6 h-6 text-white" />
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="space-y-4">
+        <div className="flex items-center justify-between group/info">
+          <div className="space-y-1">
+            <h4 className="text-xl font-medium text-stone-900">{project.title}</h4>
+            <p className="text-stone-500 text-sm max-w-md line-clamp-2">{project.description}</p>
+          </div>
+          <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button className="p-2 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+              <ChevronLeft className="w-4 h-4 text-stone-400" />
+            </button>
+            <button className="p-2 rounded-full border border-stone-200 hover:bg-stone-50 transition-colors">
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </button>
+          </div>
+        </div>
+        
+        <Link href="/projects" className="inline-flex items-center gap-2 text-stone-400 font-medium hover:text-stone-900 transition-colors text-sm group/link">
+          {t("showcase_view_case")}
+          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 export default function InstitucionalHomePage() {
   const t = useTranslations("Index");
@@ -103,6 +155,21 @@ export default function InstitucionalHomePage() {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  const projects = [
+    {
+      title: "Antigravity AI IDE",
+      description: "A next-generation development platform focused on agent-first workflows and intelligent code generation.",
+    },
+    {
+      title: "Stellar Dashboard",
+      description: "High-performance data visualization platform for enterprise infrastructure monitoring.",
+    },
+    {
+      title: "Lumina Design System",
+      description: "A comprehensive, motion-centric design system for building premium user interfaces at scale.",
+    }
+  ];
 
   // Hero animations
   const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
@@ -293,6 +360,24 @@ export default function InstitucionalHomePage() {
           >
             <CodeWindow />
           </motion.div>
+        </div>
+      </section>
+
+      {/* PROJECT SHOWCASE SECTION */}
+      <section className="max-w-[100vw] overflow-hidden py-32 space-y-16">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1] max-w-xl">
+            <TypingText text={t("showcase_title")} />
+          </h2>
+          <p className="text-lg text-stone-500 leading-relaxed max-w-md pb-2">
+            <TypingText text={t("showcase_description")} delay={1000} />
+          </p>
+        </div>
+
+        <div className="flex gap-8 overflow-x-auto px-6 md:px-[calc((100vw-80rem)/2+1.5rem)] pb-12 no-scrollbar">
+          {projects.map((project, i) => (
+            <ProjectCard key={i} project={project} t={t} />
+          ))}
         </div>
       </section>
       
