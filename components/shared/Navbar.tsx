@@ -7,7 +7,7 @@ import { ChevronDown, Code, Layout, Server, Download, Sparkles, Box, Github, Lin
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-    { name: "Feed", href: "/" },
+    { name: "Feed", href: "/feed" },
     {
         name: "Projects",
         href: "/projects",
@@ -68,6 +68,8 @@ export function Navbar() {
     const pathname = usePathname();
 
     const isInstitutionalPage = pathname === '/about';
+    const isPostPage = pathname.startsWith('/feed/') && pathname !== '/feed';
+    const showBackButton = isInstitutionalPage || isPostPage;
 
     const switchLanguage = () => {
         const nextLocale = locale === 'pt' ? 'en' : 'pt';
@@ -150,7 +152,7 @@ export function Navbar() {
                     {/* DESKTOP LINKS OR BACK BUTTON */}
                     <div className="hidden md:flex items-center h-full z-20">
                         <AnimatePresence mode="wait">
-                            {isInstitutionalPage ? (
+                            {showBackButton ? (
                                 <motion.div
                                     key="back-button"
                                     initial={{ opacity: 0, x: -10 }}
@@ -158,11 +160,13 @@ export function Navbar() {
                                     exit={{ opacity: 0, x: -10 }}
                                 >
                                     <Link
-                                        href="/"
+                                        href={isPostPage ? "/feed" : "/"}
                                         className="flex items-center gap-2 px-4 py-1.5 ml-4 text-[14px] leading-[21px] tracking-[0.1px] font-medium text-stone-500 hover:text-stone-900 transition-colors"
                                     >
                                         <ArrowLeft className="w-4 h-4" />
-                                        {locale === 'pt' ? 'Voltar para o portfólio' : 'Back to portfolio'}
+                                        {isPostPage 
+                                          ? (locale === 'pt' ? 'Voltar para o feed' : 'Back to feed')
+                                          : (locale === 'pt' ? 'Voltar para o portfólio' : 'Back to portfolio')}
                                     </Link>
                                 </motion.div>
                             ) : (
