@@ -2,7 +2,7 @@
 
 import { Search, Hash, Mail, Layers } from "lucide-react";
 
-export function FeedSidebar() {
+export function BlogSidebar() {
   const categories = [
     { name: "Project Updates", count: 24 },
     { name: "YouTube Videos", count: 12 },

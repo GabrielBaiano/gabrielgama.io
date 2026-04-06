@@ -4,7 +4,7 @@ import matter from "gray-matter";
 
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
 
-export interface FeedPostData {
+export interface BlogPostData {
   id: string;
   author: {
     name: string;
@@ -54,7 +54,7 @@ function extractSections(markdown: string) {
   return sections;
 }
 
-export async function getAllPosts(): Promise<FeedPostData[]> {
+export async function getAllPosts(): Promise<BlogPostData[]> {
   if (!fs.existsSync(POSTS_DIR)) return [];
   
   const files = fs.readdirSync(POSTS_DIR).filter(file => file.endsWith(".md"));
@@ -84,7 +84,7 @@ export async function getAllPosts(): Promise<FeedPostData[]> {
       content: data.excerpt || content.substring(0, 200) + "...", 
       fullContent: content, 
       sections: extractSections(content),
-    } as FeedPostData;
+    } as BlogPostData;
   });
 
   return posts.sort((a, b) => {
@@ -92,7 +92,7 @@ export async function getAllPosts(): Promise<FeedPostData[]> {
   });
 }
 
-export async function getPostById(id: string): Promise<FeedPostData | null> {
+export async function getPostById(id: string): Promise<BlogPostData | null> {
   const posts = await getAllPosts();
   return posts.find(p => p.id === id) || null;
 }

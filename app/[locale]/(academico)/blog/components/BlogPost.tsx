@@ -4,9 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Share2, MoreHorizontal, Bookmark, Repeat2 } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { FeedPostActions } from "./FeedPostActions";
+import { BlogPostActions } from "./BlogPostActions";
 
-export interface FeedPostProps {
+export interface BlogPostProps {
   id: string;
   author: {
     name: string;
@@ -29,7 +29,7 @@ export interface FeedPostProps {
   sections?: { id: string; title: string; body: string; }[];
 }
 
-export function FeedPost({ post }: { post: FeedPostProps }) {
+export function BlogPost({ post }: { post: BlogPostProps }) {
   return (
     <motion.article 
       initial={{ opacity: 0, y: 10 }}
@@ -69,7 +69,7 @@ export function FeedPost({ post }: { post: FeedPostProps }) {
       </div>
 
       {/* Content Block linking to Post Detail Page */}
-      <Link href={`/feed/${post.id}` as any} className="mb-4 space-y-3 group cursor-pointer block">
+      <Link href={`/blog/${post.id}` as any} className="mb-4 space-y-3 group cursor-pointer block">
         <h2 className="text-xl font-medium tracking-tight text-stone-900 leading-snug group-hover:text-orange-500 transition-colors">
           {post.title}
         </h2>
@@ -85,7 +85,7 @@ export function FeedPost({ post }: { post: FeedPostProps }) {
       </Link>
 
       {/* Footer / Actions */}
-      <FeedPostActions metrics={post.metrics} />
+      <BlogPostActions metrics={post.metrics} />
     </motion.article>
   );
 }

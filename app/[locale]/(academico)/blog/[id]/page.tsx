@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { FloatingIndex } from "./components/FloatingIndex";
-import { FeedPostActions } from "../components/FeedPostActions";
-import { getPostById } from "../../../../../services/feedService";
+import { BlogPostActions } from "../components/BlogPostActions";
+import { getPostById } from "../../../../../services/blogService";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -92,7 +92,7 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
           </div>
 
           <div className="mt-16 pt-8 border-t border-stone-100">
-            <FeedPostActions metrics={post.metrics as any} />
+            <BlogPostActions metrics={post.metrics as any} />
           </div>
 
         </div>

@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { ArrowUp, Share2, Bookmark } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface FeedPostActionsProps {
+interface BlogPostActionsProps {
   metrics: {
     upvotes: number;
     comments?: number;
   };
 }
 
-export function FeedPostActions({ metrics }: FeedPostActionsProps) {
+export function BlogPostActions({ metrics }: BlogPostActionsProps) {
   const [voteStatus, setVoteStatus] = useState<'up' | 'none'>('none');
   const [isSaved, setIsSaved] = useState(false);
   const [showBookmarkTip, setShowBookmarkTip] = useState(false);

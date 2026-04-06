@@ -7,7 +7,7 @@ import { ChevronDown, Code, Layout, Server, Download, Sparkles, Box, Github, Lin
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-    { name: "Feed", href: "/feed" },
+    { name: "Blog", href: "/blog" },
     {
         name: "Projects",
         href: "/projects",
@@ -37,7 +37,6 @@ const navItems = [
             ]
         }
     },
-    { name: "Blog", href: "/blog" },
     {
         name: "Connect",
         dropdown: {
@@ -68,7 +67,7 @@ export function Navbar() {
     const pathname = usePathname();
 
     const isInstitutionalPage = pathname === '/about';
-    const isPostPage = pathname.startsWith('/feed/') && pathname !== '/feed';
+    const isPostPage = pathname.startsWith('/blog/') && pathname !== '/blog';
     const showBackButton = isInstitutionalPage || isPostPage;
 
     const switchLanguage = () => {
@@ -159,15 +158,13 @@ export function Navbar() {
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, x: -10 }}
                                 >
-                                    <Link
-                                        href={isPostPage ? "/feed" : "/"}
+                                    <button
+                                        onClick={() => router.back()}
                                         className="flex items-center gap-2 px-4 py-1.5 ml-4 text-[14px] leading-[21px] tracking-[0.1px] font-medium text-stone-500 hover:text-stone-900 transition-colors"
                                     >
                                         <ArrowLeft className="w-4 h-4" />
-                                        {isPostPage 
-                                          ? (locale === 'pt' ? 'Voltar para o feed' : 'Back to feed')
-                                          : (locale === 'pt' ? 'Voltar para o portfólio' : 'Back to portfolio')}
-                                    </Link>
+                                        {locale === 'pt' ? 'Voltar' : 'Back'}
+                                    </button>
                                 </motion.div>
                             ) : (
                                 <motion.nav
