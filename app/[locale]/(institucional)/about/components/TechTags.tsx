@@ -18,7 +18,7 @@ export function TechTags() {
                     transition={{ duration: 0.3, delay: idx * 0.05 + 0.3 }}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-4 py-1.5 bg-stone-700/90 text-stone-50 rounded-full text-xs font-medium cursor-pointer shadow-sm hover:shadow-md border border-stone-600/50 transition-all select-none backdrop-blur-sm"
+                    className="px-4 py-1.5 bg-stone-700/90 text-stone-50 rounded-full text-xs font-medium cursor-pointer shadow-sm hover:shadow-md border border-stone-600/50 transition-shadow transition-colors select-none backdrop-blur-sm"
                 >
                     {tag}
                 </motion.div>

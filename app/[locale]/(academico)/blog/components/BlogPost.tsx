@@ -34,7 +34,7 @@ export function BlogPost({ post }: { post: BlogPostProps }) {
     <motion.article 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-[24px] border border-stone-200/60 p-5 shadow-sm transition-all hover:shadow-md"
+      className="bg-white rounded-[24px] border border-stone-200/60 p-5 shadow-sm transition-shadow hover:shadow-md"
     >
       {post.isShared && (
         <div className="flex items-center gap-2 mb-4 text-[13px] font-medium text-stone-500 ml-1">

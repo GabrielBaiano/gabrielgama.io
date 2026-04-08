@@ -13,7 +13,7 @@ export function AboutMeCard() {
             <motion.div
                 layoutId="about-me-card"
                 onClick={() => setIsOpen(true)}
-                className="bg-[#F1E5D1] rounded-[32px] p-8 lg:p-10 flex flex-col shadow-sm w-full relative overflow-hidden group cursor-pointer border-2 border-[#F97316]/20 hover:border-[#F97316] transition-all duration-500 min-h-[240px]"
+                className="bg-[#F1E5D1] rounded-[32px] p-8 lg:p-10 flex flex-col shadow-sm w-full relative overflow-hidden group cursor-pointer border-2 border-[#F97316]/20 hover:border-[#F97316] transition-colors duration-500 min-h-[240px]"
             >
                 <div className="relative z-20 flex flex-col w-full pr-12 pb-4">
                     {/* Top Title */}

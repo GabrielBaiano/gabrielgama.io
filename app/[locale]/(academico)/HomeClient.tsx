@@ -11,7 +11,6 @@ import {
   LayoutGrid,
   Layers,
   FileText,
-  Feather,
   Terminal,
   Folder,
   BarChart3,
@@ -19,7 +18,11 @@ import {
   Zap,
   Search,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Mail,
+  Linkedin,
+  Feather,
+  Code
 } from "lucide-react";
 
 function TypingText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
@@ -94,7 +97,7 @@ function ProjectCard({ project }: { project: any }) {
   return (
     <div className="min-w-[320px] md:min-w-[880px] flex-shrink-0">
       <motion.div
-        className={`relative aspect-[16/9] ${project.color} rounded-[3rem] overflow-hidden border border-stone-100/50 shadow-sm transition-all duration-700`}
+        className={`relative aspect-[16/9] ${project.color} rounded-[3rem] overflow-hidden border border-stone-100/50 shadow-sm transition-colors transition-shadow duration-700`}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent z-10" />
 
@@ -257,10 +260,16 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.95]);
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
+  const videoRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: videoScrollProgress } = useScroll({
+    target: videoRef,
+    offset: ["start end", "center center"]
+  });
+
   // Video animations
-  const videoScale = useTransform(scrollYProgress, [0, 0.3], [0.75, 1]);
-  const videoOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-  const videoY = useTransform(scrollYProgress, [0, 0.3], [40, 0]);
+  const videoScale = useTransform(videoScrollProgress, [0, 1], [0.75, 1]);
+  const videoOpacity = useTransform(videoScrollProgress, [0, 1], [0, 1]);
+  const videoY = useTransform(videoScrollProgress, [0, 1], [40, 0]);
   const springVideoScale = useSpring(videoScale, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
@@ -376,7 +385,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
       </motion.section>
 
       {/* SCROLL REVEAL VIDEO SECTION */}
-      <section className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 overflow-visible">
+      <section ref={videoRef} className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 overflow-visible">
         <motion.div
           style={{ scale: springVideoScale, opacity: videoOpacity, y: videoY }}
           className="relative w-full max-w-7xl aspect-video bg-black rounded-[3rem] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.3)]"
@@ -441,6 +450,68 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
           >
             <CodeWindow />
           </motion.div>
+        </div>
+      </section>
+
+      {/* CRAFTING VISUAL COMPONENTS FEATURE SECTION (STANDARDIZED DESIGN) */}
+      <section className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Left side visually (Reversed order on desktop) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="order-2 lg:order-1"
+          >
+            <div className="w-full bg-white rounded-3xl border border-stone-200 shadow-2xl overflow-hidden font-mono text-[13px] leading-relaxed">
+              <div className="flex items-center gap-2 px-4 py-3 bg-stone-50 border-b border-stone-200">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
+                </div>
+                <div className="text-[11px] text-stone-400 ml-2">CardComponent.tsx</div>
+              </div>
+              <div className="p-8 flex flex-col items-center justify-center bg-stone-50/50 min-h-[250px] relative overflow-hidden">
+                <div className="w-full max-w-[180px] aspect-[4/3] bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-stone-100 flex flex-col items-center justify-center transition-transform hover:-translate-y-2 hover:shadow-[0_40px_60px_-15px_rgba(0,0,0,0.15)] duration-500 cursor-pointer z-10 p-4 relative overflow-hidden group">
+                   <div className="absolute inset-0 bg-gradient-to-tr from-stone-50 to-white" />
+                   <div className="w-full h-1/2 bg-stone-100/80 rounded-xl mb-4 group-hover:scale-[1.02] transition-transform duration-500 relative z-10" />
+                   <div className="w-4/5 h-2.5 bg-stone-200/80 rounded-full mb-2 relative z-10" />
+                   <div className="w-1/2 h-2.5 bg-stone-100 rounded-full relative z-10 mr-auto ml-[10%]" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right side text */}
+          <div className="space-y-8 order-1 lg:order-2 pl-0 lg:pl-12">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-medium text-stone-900">
+                <TypingText text="Crafting Visual Components" delay={500} />
+              </h3>
+              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
+                <TypingText text="I build beautiful, interactive UI components directly into the application, reducing dependency overhead while ensuring pixel-perfect fidelity." delay={1000} />
+              </p>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.5 }}
+              className="flex items-center gap-4 pt-4"
+            >
+              <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
+                <Code className="w-5 h-5 text-indigo-500" />
+              </div>
+              <div>
+                <div className="text-sm font-medium text-stone-900">Reusable & Configurable</div>
+                <div className="text-xs text-stone-500 italic">Built primarily with Tailwind and Framer Motion</div>
+              </div>
+            </motion.div>
+          </div>
+
         </div>
       </section>
 

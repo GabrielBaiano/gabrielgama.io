@@ -7,9 +7,8 @@ import { ChevronDown, Code, Layout, Server, Download, Sparkles, Box, Github, Lin
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-    { name: "Blog", href: "/blog" },
     {
-        name: "Projects",
+        name: "Work",
         href: "/projects",
         dropdown: {
             title: "Built for developers in the agent-first era",
@@ -37,6 +36,7 @@ const navItems = [
             ]
         }
     },
+    { name: "Blog", href: "/blog" },
     {
         name: "Connect",
         dropdown: {

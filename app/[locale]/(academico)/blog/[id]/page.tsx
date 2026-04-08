@@ -79,9 +79,9 @@ export default async function PostDetailPage({ params }: { params: Promise<{ id:
                   },
                   p: ({node, ...props}) => <p className="mb-6 whitespace-pre-line" {...props} />,
                   img: ({node, ...props}) => (
-                    <div className="mt-12 mb-12 rounded-[24px] overflow-hidden border border-stone-100 bg-stone-50 shadow-sm">
+                    <span className="block mt-12 mb-12 rounded-[24px] overflow-hidden border border-stone-100 bg-stone-50 shadow-sm">
                       <img className="w-full object-cover" alt={props.alt || "MDX Embed"} {...props} />
-                    </div>
+                    </span>
                   ),
                   strong: ({node, ...props}) => <strong className="font-semibold text-stone-900" {...props} />
                 }}
