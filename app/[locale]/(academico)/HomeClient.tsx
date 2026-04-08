@@ -25,6 +25,7 @@ import {
   Code
 } from "lucide-react";
 
+
 function TypingText({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) {
   const [displayedText, setDisplayedText] = useState("");
   const [isStarted, setIsStarted] = useState(false);
@@ -154,6 +155,54 @@ function BlogCard({ blog }: { blog: any }) {
         </Link>
       </div>
     </div>
+  );
+}
+
+function MobileShowcase() {
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-32 space-y-16 border-t border-stone-100">
+      
+      {/* Section Title */}
+      <div className="max-w-4xl">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
+          <TypingText text="Mobile Development" />
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+        
+        {/* Left Column */}
+        <div className="flex flex-col gap-10">
+          {/* Phone Mockup Frame */}
+          <div className="w-full aspect-[4/5] md:aspect-[9/16] bg-white rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-100 relative overflow-hidden group">
+             <div className="absolute inset-0 bg-black transition-transform duration-700 group-hover:scale-[1.02]" />
+          </div>
+          
+          <div className="flex flex-col gap-3 pr-4 md:pr-12">
+            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">My background in Mobile apps</h4>
+            <p className="text-stone-500 text-[16px] leading-[1.6]">
+              Early in my career, I built fluid Android applications and cross-platform native tools with React Native, prioritizing intuitive UX inside small form factors. Every interaction was designed to feel native and snappy.
+            </p>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="flex flex-col gap-10 md:mt-[200px]">
+          <div className="flex flex-col gap-3 pr-4 md:pr-12">
+            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">But, I wanted more.</h4>
+            <p className="text-stone-500 text-[16px] leading-[1.6]">
+              Creating functional mobile apps was just the beginning. I needed to push design boundaries, implement deep micro-interactions, and elevate digital products globally across both web and mobile ecosystems.
+            </p>
+          </div>
+
+          {/* Phone Mockup Frame */}
+          <div className="w-full aspect-[4/5] md:aspect-[9/16] bg-white rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-100 relative overflow-hidden group">
+             <div className="absolute inset-0 bg-black transition-transform duration-700 group-hover:scale-[1.02]" />
+          </div>
+        </div>
+
+      </div>
+    </section>
   );
 }
 
@@ -514,6 +563,9 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
 
         </div>
       </section>
+
+      {/* MOBILE SHOWCASE SECTION */}
+      <MobileShowcase />
 
       {/* PROJECT SHOWCASE SECTION */}
       <section className="max-w-[100vw] overflow-hidden py-32 space-y-16">
