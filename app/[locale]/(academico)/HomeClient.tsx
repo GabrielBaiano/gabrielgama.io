@@ -22,7 +22,15 @@ import {
   Mail,
   Linkedin,
   Feather,
-  Code
+  Code,
+  Globe,
+  Copy,
+  UserPlus,
+  Send,
+  X,
+  Sparkles,
+  MousePointer2,
+  Pointer
 } from "lucide-react";
 
 
@@ -62,6 +70,48 @@ function TypingText({ text, className, delay = 0 }: { text: string; className?: 
   );
 }
 
+function AIPromptWidget() {
+  const [prompt, setPrompt] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  useEffect(() => {
+    const text = "Generate a semantic login component...";
+    let i = 0;
+    setIsTyping(true);
+    const interval = setInterval(() => {
+      setPrompt(text.substring(0, i));
+      i++;
+      if (i > text.length) {
+        clearInterval(interval);
+        setTimeout(() => setIsTyping(false), 2000);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-full bg-white/60 backdrop-blur-xl rounded-[20px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-4 overflow-hidden relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/40 to-transparent z-0 pointer-events-none" />
+      <div className="flex flex-col gap-3 relative z-10">
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-purple-500 fill-purple-500/20" />
+          <span className="text-[11px] font-semibold tracking-wide text-purple-700 uppercase bg-purple-50 px-2 py-0.5 rounded-full border border-purple-100/50">AI Copilot</span>
+        </div>
+        
+        <div className="flex items-center gap-3 bg-white/80 rounded-[14px] p-2 border border-stone-200/50 shadow-inner overflow-hidden">
+          <div className="text-[13px] font-mono text-stone-500 w-full flex items-center h-6 px-1 truncate">
+            {prompt}
+            {isTyping && <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="inline-block w-1.5 h-3.5 bg-purple-500 ml-0.5" />}
+          </div>
+          <div className="w-8 h-8 bg-black rounded-[10px] flex items-center justify-center shadow-md shrink-0 hover:scale-105 transition-transform cursor-pointer">
+             <ArrowRight className="w-3.5 h-3.5 text-white" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CodeWindow() {
   return (
     <div className="w-full bg-white rounded-3xl border border-stone-200 shadow-2xl overflow-hidden font-mono text-[13px] leading-relaxed">
@@ -90,6 +140,364 @@ function CodeWindow() {
           </code>
         </pre>
       </div>
+    </div>
+  );
+}
+
+function SolidSend({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}>
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+    </svg>
+  );
+}
+
+function ShareWidget() {
+  const [isPublic, setIsPublic] = useState(false);
+  const [email, setEmail] = useState("");
+  const [chips, setChips] = useState<string[]>([]);
+  const [invitedUsers, setInvitedUsers] = useState<string[]>([]);
+  const [cursorType, setCursorType] = useState<"arrow" | "pointer">("arrow");
+  const [ghostPress, setGhostPress] = useState<"toggle" | "invite" | "remove" | null>(null);
+
+  const [interacted, setInteracted] = useState(false);
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(widgetRef, { margin: "0px", amount: 0.5 });
+
+  useEffect(() => {
+    if (interacted || !isInView) return;
+
+    let isMounted = true;
+    let timeouts: NodeJS.Timeout[] = [];
+    let typingInterval: NodeJS.Timeout;
+
+    const cycle = () => {
+      if (!isMounted || interacted) return;
+      
+      // Clean slate
+      setIsPublic(false);
+      setEmail("");
+      setChips([]);
+      setInvitedUsers([]);
+      setCursorType("arrow");
+
+      // 0.5s: Hover Toggle
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("pointer");
+      }, 500));
+
+      // 1.6s: Click Toggle
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) {
+          setGhostPress("toggle");
+          setIsPublic(true);
+        }
+      }, 1590));
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setGhostPress(null);
+      }, 1700));
+
+      // 2.0s: Leave Toggle
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("arrow");
+      }, 2000));
+
+      // 3.3s: Click Input and Type
+      timeouts.push(setTimeout(() => {
+        if (!isMounted || interacted) return;
+        let i = 0;
+        const text = "ux@gama.io "; // Trailing space triggers natural evaluation
+        typingInterval = setInterval(() => {
+          if (!isMounted || interacted) {
+            clearInterval(typingInterval);
+            return;
+          }
+          setEmail(text.substring(0, i + 1));
+          i++;
+          if (i >= text.length) clearInterval(typingInterval);
+        }, 100);
+      }, 3300));
+      
+      // 6.4s: Hover Invite
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("pointer");
+      }, 6400));
+
+      // 6.6s: Click Invite
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) {
+          setGhostPress("invite");
+          setInvitedUsers(["ux@gama.io"]);
+          setChips([]);
+          setEmail("");
+        }
+      }, 6600));
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setGhostPress(null);
+      }, 6700));
+      
+      // 7.0s: Leave Invite
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("arrow");
+      }, 7000));
+      
+      // 8.1s: Hover Remove
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("pointer");
+      }, 8100));
+
+      // 8.3s: Click Remove
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) {
+          setGhostPress("remove");
+          setInvitedUsers([]);
+        }
+      }, 8300));
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setGhostPress(null);
+      }, 8400));
+      
+      // 8.8s: Leave Remove
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("arrow");
+      }, 8800));
+      
+      // 9.9s: Hover Toggle OFF
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("pointer");
+      }, 9900));
+
+      // 10.1s: Click Toggle OFF
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) {
+          setGhostPress("toggle");
+          setIsPublic(false);
+        }
+      }, 10100));
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setGhostPress(null);
+      }, 10200));
+      
+      // 11.0s: Leave Toggle
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) setCursorType("arrow");
+      }, 11000));
+
+      // 14.0s: Repeat
+      timeouts.push(setTimeout(() => {
+        if (isMounted && !interacted) cycle();
+      }, 14000));
+    };
+
+    timeouts.push(setTimeout(cycle, 500));
+
+    return () => {
+      isMounted = false;
+      timeouts.forEach(clearTimeout);
+      clearInterval(typingInterval);
+    };
+  }, [interacted, isInView]);
+
+  // Automatically "recognize" if it's a valid email or specific trigger
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(email.trim())) {
+        setChips(prev => {
+          if (!prev.includes(email.trim())) {
+            return [...prev, email.trim()];
+          }
+          return prev;
+        });
+        setEmail("");
+      }
+    }, 1200);
+
+    return () => clearTimeout(handler);
+  }, [email]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      if (email.trim()) {
+        setChips([...chips, email.trim()]);
+        setEmail("");
+      }
+    } else if (e.key === 'Backspace' && email === '' && chips.length > 0) {
+      setChips(chips.slice(0, -1));
+    }
+  };
+
+  const handleInvite = () => {
+    const toInvite = [...chips];
+    if (email.trim()) {
+      toInvite.push(email.trim());
+    }
+    if (toInvite.length > 0) {
+      setInvitedUsers([...invitedUsers, ...toInvite]);
+      setChips([]);
+      setEmail("");
+    }
+  };
+
+  return (
+    <div 
+      ref={widgetRef}
+      className="w-[490px] bg-white rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-stone-200/60 p-6 text-left flex flex-col z-10 transition-transform duration-500 relative"
+      onMouseEnter={() => setInteracted(true)}
+      onTouchStart={() => setInteracted(true)}
+    >
+      {!interacted && isInView && (
+        <motion.div
+          initial={{ opacity: 0, left: "70%", top: 350 }}
+          animate={{
+            opacity: [   0,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     0,    0 ],
+            left:    ["70%","90%","90%","90%","90%","30%","30%","30%","86%","86%","86%","88%","88%","88%","88%","90%","90%","90%","90%","70%","70%"],
+            top:     [ 350,    85,    85,    85,    85,   265,   265,   265,   265,   265,   265,   345,   345,   345,   345,    85,    85,    85,    85,   350,  350 ],
+            scale:   [   1,     1,     1,   0.8,     1,     1,   0.8,     1,     1,   0.8,     1,     1,     1,   0.8,     1,     1,   0.8,     1,     1,     1,    1 ]
+          }}
+          transition={{
+            duration: 14,
+            times:   [   0, 0.035, 0.107, 0.114, 0.121,   0.2, 0.228, 0.235, 0.342, 0.378, 0.385, 0.514, 0.585, 0.592,   0.6, 0.714, 0.721, 0.728, 0.785, 0.857,    1 ],
+            repeat: Infinity,
+          }}
+          className="absolute z-50 pointer-events-none origin-top-left"
+          style={{ width: 28, height: 28 }}
+        >
+          {cursorType === "pointer" ? (
+            <Pointer className="w-8 h-8 text-white fill-black drop-shadow-lg" strokeWidth={1.5} />
+          ) : (
+            <MousePointer2 className="w-8 h-8 text-white fill-black drop-shadow-lg" strokeWidth={1.5} />
+          )}
+        </motion.div>
+      )}
+
+      {/* Share Section */}
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-stone-900 text-[18px] tracking-tight pb-3">Share</h3>
+        <div className="bg-[#f4f4f5] rounded-[20px] p-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-white rounded-[14px] p-2.5 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-stone-100">
+              <Globe className="w-5 h-5 text-stone-500" strokeWidth={2.2} />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="font-semibold text-stone-900 text-[15px] leading-tight">Anyone</span>
+              <span className="text-stone-500 text-[13px] leading-tight">Everyone with link can access</span>
+            </div>
+          </div>
+          {/* Toggle */}
+          <button 
+            onClick={() => setIsPublic(!isPublic)}
+            className={`relative w-[44px] h-[24px] rounded-full transition-all duration-300 ${isPublic ? 'bg-[#18181b]' : 'bg-[#e4e4e7]'} ${ghostPress === "toggle" ? "scale-90" : "scale-100"}`}
+          >
+            <motion.div 
+              initial={false}
+              animate={{ x: isPublic ? 22 : 2 }}
+              transition={{ type: "spring", stiffness: 600, damping: 35 }}
+              className="absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm"
+            />
+          </button>
+        </div>
+        
+        <div className="h-px bg-stone-100 w-full mt-4 mb-3" />
+        
+        <div className="flex items-center justify-between px-1">
+          <span className="text-stone-400 text-[13.5px] truncate pr-4 font-mono font-medium">acme.com/enterprise/note/453</span>
+          <button className="text-stone-400 hover:text-stone-600 transition-colors active:scale-95">
+            <Copy className="w-[18px] h-[18px]" strokeWidth={2} />
+          </button>
+        </div>
+      </div>
+
+      {/* Invite Section */}
+      <AnimatePresence>
+        {isPublic && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            {/* Wrapper to control padding/margins smoothly within the animated expanding height */}
+            <div className="pt-6 pb-2 flex flex-col gap-3">
+              <div className="h-px bg-stone-100 w-full mb-1" />
+              <h3 className="font-medium text-stone-600 text-[14px]">Invite</h3>
+              
+              <div className="flex items-center justify-between border-2 border-stone-200 focus-within:border-black transition-colors bg-white p-1 rounded-xl group">
+                <div className="flex items-center gap-2 pl-2 pr-1 w-full flex-wrap">
+                  <UserPlus strokeWidth={2.5} className="w-[18px] h-[18px] text-stone-400 shrink-0 group-focus-within:text-stone-600 transition-colors" />
+                  
+                  {chips.map((chip, idx) => (
+                    <div key={idx} className="flex items-center gap-1.5 border border-stone-200 bg-white rounded-full py-0.5 px-1 pr-2 shadow-sm">
+                      <img src={`https://i.pravatar.cc/150?u=${chip}`} alt="Avatar" className="w-[22px] h-[22px] rounded-full object-cover bg-blue-100" />
+                      <span className="text-[13px] font-medium text-stone-700 pl-0.5">
+                        {chip.split('@')[0].charAt(0).toUpperCase() + chip.split('@')[0].slice(1)}
+                      </span>
+                      <button 
+                        onClick={() => setChips(chips.filter((_, i) => i !== idx))}
+                        className="text-stone-400 hover:text-stone-600 transition-colors"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+
+                  <input 
+                    type="text" 
+                    placeholder={chips.length === 0 ? "Enter email to share" : ""}
+                    className="bg-transparent border-none outline-none text-[14px] flex-1 min-w-[60px] text-stone-900 placeholder:text-stone-400 py-1.5"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                </div>
+                <button 
+                  onClick={handleInvite}
+                  className={`bg-black text-white px-4 py-2 rounded-lg text-[13px] font-medium flex items-center gap-1.5 transition-all shrink-0 ${ghostPress === "invite" ? "scale-90 bg-stone-800" : "hover:bg-stone-800 scale-100"}`}
+                >
+                  <SolidSend className="w-3.5 h-3.5" />
+                  Invite
+                </button>
+              </div>
+
+              <AnimatePresence>
+                {invitedUsers.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-3 flex flex-col gap-2">
+                      {invitedUsers.map((user, idx) => (
+                        <div key={idx} className="flex items-center justify-between border border-stone-100 rounded-xl p-2.5 bg-stone-50">
+                          <div className="flex items-center gap-3">
+                            <img src={`https://i.pravatar.cc/150?u=${user}`} alt="Avatar" className="w-10 h-10 rounded-full object-cover shadow-sm bg-stone-200 border border-stone-200/50" />
+                            <div className="flex flex-col gap-0.5">
+                              <span className="font-semibold text-stone-900 text-[14.5px] leading-none">
+                                {user.split('@')[0].charAt(0).toUpperCase() + user.split('@')[0].slice(1)}
+                              </span>
+                              <span className="text-stone-500 text-[13px] leading-tight">{user}</span>
+                            </div>
+                          </div>
+                          <button 
+                            onClick={() => setInvitedUsers(invitedUsers.filter((_, i) => i !== idx))}
+                            className={`text-[13px] font-medium transition-all pr-1 py-1 px-2 rounded-md ${ghostPress === "remove" ? "scale-90 text-red-500 bg-red-50" : "text-stone-400 hover:text-red-500 hover:bg-stone-100"}`}
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -478,6 +886,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 2.5 }}
               className="flex items-center gap-4 pt-4"
             >
@@ -489,16 +898,44 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
                 <div className="text-xs text-stone-500 italic">Optimized for search engine visibility and user experience</div>
               </div>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 2.7 }}
+              className="flex items-center gap-4 pt-2"
+            >
+              <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
+                <Sparkles className="w-5 h-5 text-purple-500" />
+              </div>
+              <div>
+                <div className="text-sm font-medium text-stone-900">Intelligent Workflows</div>
+                <div className="text-xs text-stone-500 italic">Automating UI components creation and logic</div>
+              </div>
+            </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <CodeWindow />
-          </motion.div>
+          <div className="relative w-full pb-8 md:pb-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <CodeWindow />
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute -bottom-10 -right-2 md:-right-8 w-[90%] md:w-[85%] z-10"
+            >
+              <AIPromptWidget />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -512,25 +949,10 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="order-2 lg:order-1"
+            className="order-2 lg:order-1 flex items-center justify-center min-h-[400px] w-full"
           >
-            <div className="w-full bg-white rounded-3xl border border-stone-200 shadow-2xl overflow-hidden font-mono text-[13px] leading-relaxed">
-              <div className="flex items-center gap-2 px-4 py-3 bg-stone-50 border-b border-stone-200">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-stone-200" />
-                </div>
-                <div className="text-[11px] text-stone-400 ml-2">CardComponent.tsx</div>
-              </div>
-              <div className="p-8 flex flex-col items-center justify-center bg-stone-50/50 min-h-[250px] relative overflow-hidden">
-                <div className="w-full max-w-[180px] aspect-[4/3] bg-white rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-stone-100 flex flex-col items-center justify-center transition-transform hover:-translate-y-2 hover:shadow-[0_40px_60px_-15px_rgba(0,0,0,0.15)] duration-500 cursor-pointer z-10 p-4 relative overflow-hidden group">
-                   <div className="absolute inset-0 bg-gradient-to-tr from-stone-50 to-white" />
-                   <div className="w-full h-1/2 bg-stone-100/80 rounded-xl mb-4 group-hover:scale-[1.02] transition-transform duration-500 relative z-10" />
-                   <div className="w-4/5 h-2.5 bg-stone-200/80 rounded-full mb-2 relative z-10" />
-                   <div className="w-1/2 h-2.5 bg-stone-100 rounded-full relative z-10 mr-auto ml-[10%]" />
-                </div>
-              </div>
+            <div className="scale-110 md:scale-[1.15] origin-center">
+              <ShareWidget />
             </div>
           </motion.div>
 
@@ -548,6 +970,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 1.5 }}
               className="flex items-center gap-4 pt-4"
             >
@@ -560,6 +983,59 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
               </div>
             </motion.div>
           </div>
+
+        </div>
+      </section>
+
+      {/* FLUID MICRO-INTERACTIONS FEATURE SECTION */}
+      <section className="max-w-7xl mx-auto px-6 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-medium text-stone-900">
+                <TypingText text="Fluid Micro-Interactions" delay={500} />
+              </h3>
+              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
+                <TypingText text="Every great digital product relies on details that elevate the experience. Small animations and well-crafted physics make interfaces feel natural and engaging." delay={1000} />
+              </p>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 1.5 }}
+              className="flex items-center gap-4 pt-4"
+            >
+              <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
+                <Play className="w-5 h-5 text-emerald-500 fill-emerald-500/20" />
+              </div>
+              <div>
+                <div className="text-sm font-medium text-stone-900">Motion & Physics</div>
+                <div className="text-xs text-stone-500 italic">Spring animations feeling alive and responsive</div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center justify-center w-full"
+          >
+            <div className="w-full max-w-[560px] rounded-3xl border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden bg-stone-50 relative group flex">
+                <video 
+                  src="/PinDown.io_@max0743_1776060477.mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  className="w-full h-auto block scale-[1.01] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+            </div>
+          </motion.div>
 
         </div>
       </section>
