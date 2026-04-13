@@ -162,7 +162,7 @@ function ShareWidget() {
 
   const [interacted, setInteracted] = useState(false);
   const widgetRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(widgetRef, { margin: "0px", amount: 0.5 });
+  const isInView = useInView(widgetRef, { margin: "0px", amount: 0.5, once: true });
 
   useEffect(() => {
     if (interacted || !isInView) return;
@@ -566,6 +566,32 @@ function BlogCard({ blog }: { blog: any }) {
   );
 }
 
+function AutoPlayVideo({ src, className }: { src: string, className?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isInView = useInView(videoRef, { margin: "200px 0px" });
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isInView) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [isInView]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      muted
+      loop
+      playsInline
+      className={className}
+    />
+  );
+}
+
 function MobileShowcase() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-32 space-y-16 border-t border-stone-100">
@@ -573,7 +599,7 @@ function MobileShowcase() {
       {/* Section Title */}
       <div className="max-w-4xl">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
-          <TypingText text="Mobile Development" />
+          <TypingText text="Crafting Mobile Experiences" />
         </h2>
       </div>
 
@@ -582,14 +608,17 @@ function MobileShowcase() {
         {/* Left Column */}
         <div className="flex flex-col gap-10">
           {/* Phone Mockup Frame */}
-          <div className="w-full aspect-[4/5] md:aspect-[9/16] bg-white rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-100 relative overflow-hidden group">
-             <div className="absolute inset-0 bg-black transition-transform duration-700 group-hover:scale-[1.02]" />
+          <div className="w-full aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
+             <AutoPlayVideo 
+               src="/mockup01.mp4" 
+               className="absolute inset-0 w-full h-full object-cover"
+             />
           </div>
           
           <div className="flex flex-col gap-3 pr-4 md:pr-12">
-            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">My background in Mobile apps</h4>
+            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">Crafting a Learning Platform</h4>
             <p className="text-stone-500 text-[16px] leading-[1.6]">
-              Early in my career, I built fluid Android applications and cross-platform native tools with React Native, prioritizing intuitive UX inside small form factors. Every interaction was designed to feel native and snappy.
+              For this book summary app, I focused on building a clean, distraction-free interface that prioritizes content. Every interaction&mdash;from browsing the library to exploring new ideas&mdash;was delicately crafted to feel fluid, intuitive, and deeply native.
             </p>
           </div>
         </div>
@@ -597,15 +626,18 @@ function MobileShowcase() {
         {/* Right Column */}
         <div className="flex flex-col gap-10 md:mt-[200px]">
           <div className="flex flex-col gap-3 pr-4 md:pr-12">
-            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">But, I wanted more.</h4>
+            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">Seamless Topic Curation</h4>
             <p className="text-stone-500 text-[16px] leading-[1.6]">
-              Creating functional mobile apps was just the beginning. I needed to push design boundaries, implement deep micro-interactions, and elevate digital products globally across both web and mobile ecosystems.
+              Beyond the core reading experience, I wanted to make discovery effortless. I designed an interactive onboarding flow with smooth micro-interactions that lets users seamlessly curate topics like productivity, leadership, and mindfulness.
             </p>
           </div>
 
           {/* Phone Mockup Frame */}
-          <div className="w-full aspect-[4/5] md:aspect-[9/16] bg-white rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-100 relative overflow-hidden group">
-             <div className="absolute inset-0 bg-black transition-transform duration-700 group-hover:scale-[1.02]" />
+          <div className="w-full aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
+             <AutoPlayVideo 
+               src="/mockup02.mp4" 
+               className="absolute inset-0 w-full h-full object-cover"
+             />
           </div>
         </div>
 
