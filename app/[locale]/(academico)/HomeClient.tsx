@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView, useAnimationFrame, useMotionValue } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import {
   User,
@@ -49,9 +49,10 @@ function TypingText({ text, className, delay = 0 }: { text: string; className?: 
 
   useEffect(() => {
     if (isStarted && displayedText.length < text.length) {
+      const baseDelay = Math.max(3, 800 / text.length);
       const timeout = setTimeout(() => {
         setDisplayedText(text.slice(0, displayedText.length + 1));
-      }, 15 + Math.random() * 20);
+      }, baseDelay + Math.random() * (baseDelay * 0.5));
       return () => clearTimeout(timeout);
     }
   }, [isStarted, displayedText, text]);
@@ -67,6 +68,48 @@ function TypingText({ text, className, delay = 0 }: { text: string; className?: 
         />
       )}
     </span>
+  );
+}
+
+// WAVE ICON COMPONENT
+function WaveIcon({ item, index, waveTime, hoveredIndex, setHoveredIndex, waveHovered }: any) {
+  const y = useTransform(waveTime, (time: number) => {
+    const phase = (index / 12) * Math.PI * 2;
+    const current = (time / 5000) * Math.PI * 2;
+    return Math.sin(current + phase) * 35;
+  });
+
+  const isHovered = hoveredIndex === index;
+
+  return (
+    <motion.div 
+      className={`relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#FAFAFA] border border-stone-200/80 shadow-[0_8px_16px_-6px_rgba(0,0,0,0.05)] flex items-center justify-center shrink-0 cursor-pointer ${index > 17 ? 'hidden 2xl:flex' : ''}`}
+      style={{ y }}
+      onMouseEnter={() => {
+        setHoveredIndex(index);
+        waveHovered.current = true;
+      }}
+      onMouseLeave={() => {
+        setHoveredIndex(null);
+        waveHovered.current = false;
+      }}
+    >
+      <img src={`https://cdn.simpleicons.org/${item.brand}/44403c`} alt={item.name} className="w-7 h-7 md:w-9 md:h-9 opacity-90 object-contain" />
+      
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div 
+             initial={{ opacity: 0, y: 10, scale: 0.9 }}
+             animate={{ opacity: 1, y: 0, scale: 1 }}
+             exit={{ opacity: 0, y: 5, scale: 0.95 }}
+             className="absolute -top-12 px-3 py-1.5 bg-stone-900 text-white text-xs font-medium rounded-lg whitespace-nowrap shadow-xl flex items-center justify-center pointer-events-none z-50"
+          >
+             {item.name}
+             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 rotate-45" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -598,7 +641,7 @@ function MobileShowcase() {
       
       {/* Section Title */}
       <div className="max-w-4xl">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
+        <h2 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
           <TypingText text="Crafting Mobile Experiences" />
         </h2>
       </div>
@@ -608,32 +651,42 @@ function MobileShowcase() {
         {/* Left Column */}
         <div className="flex flex-col gap-10">
           {/* Phone Mockup Frame */}
-          <div className="w-full aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
+          <div className="w-full max-w-[500px] lg:max-w-[540px] aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
              <AutoPlayVideo 
                src="/mockup01.mp4" 
                className="absolute inset-0 w-full h-full object-cover"
              />
           </div>
           
-          <div className="flex flex-col gap-3 pr-4 md:pr-12">
-            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">Crafting a Learning Platform</h4>
-            <p className="text-stone-500 text-[16px] leading-[1.6]">
-              For this book summary app, I focused on building a clean, distraction-free interface that prioritizes content. Every interaction&mdash;from browsing the library to exploring new ideas&mdash;was delicately crafted to feel fluid, intuitive, and deeply native.
-            </p>
+          <div className="flex flex-col gap-5 w-full">
+            <h4 className="text-2xl lg:text-3xl font-medium tracking-tight text-stone-900">Fluid & Native Experiences.</h4>
+            <div className="flex flex-col gap-5 text-stone-500 text-lg leading-relaxed">
+              <p>
+                I build mobile applications that prioritize intuitive UX and seamless navigation. Whether it's a sleek educational platform or a complex productivity tool.
+              </p>
+              <p>
+                My focus is always on creating distraction-free interfaces where every interaction feels fluid, modern, and perfectly tailored to the device.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Right Column */}
         <div className="flex flex-col gap-10 md:mt-[200px]">
-          <div className="flex flex-col gap-3 pr-4 md:pr-12">
-            <h4 className="text-[22px] font-medium tracking-tight text-stone-900">Seamless Topic Curation</h4>
-            <p className="text-stone-500 text-[16px] leading-[1.6]">
-              Beyond the core reading experience, I wanted to make discovery effortless. I designed an interactive onboarding flow with smooth micro-interactions that lets users seamlessly curate topics like productivity, leadership, and mindfulness.
-            </p>
+          <div className="flex flex-col gap-5 w-full">
+            <h4 className="text-2xl lg:text-3xl font-medium tracking-tight text-stone-900">Engaging Micro-Interactions.</h4>
+            <div className="flex flex-col gap-5 text-stone-500 text-lg leading-relaxed">
+              <p>
+                Great usability is fundamentally found in the details. I specialize in crafting effortless user flows and deep micro-interactions that bring digital products to life.
+              </p>
+              <p>
+                By combining thoughtful motion design with intuitive architecture, I ensure users stay deeply engaged from their very first swipe.
+              </p>
+            </div>
           </div>
 
           {/* Phone Mockup Frame */}
-          <div className="w-full aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
+          <div className="w-full max-w-[500px] lg:max-w-[540px] aspect-[720/1560] bg-stone-300 rounded-[32px] md:rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border-[8px] md:border-[12px] border-stone-300 relative overflow-hidden">
              <AutoPlayVideo 
                src="/mockup02.mp4" 
                className="absolute inset-0 w-full h-full object-cover"
@@ -749,17 +802,46 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.95]);
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
-  const videoRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: videoScrollProgress } = useScroll({
-    target: videoRef,
-    offset: ["start end", "center center"]
+  // Global Wave Time Controller
+  const waveTime = useMotionValue(0);
+  const waveHovered = useRef(false);
+  const [hoveredWaveIndex, setHoveredWaveIndex] = useState<number | null>(null);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
+  useAnimationFrame((t, delta) => {
+    // 0.15 makes it run at 15% speed (SUPER slow) when hovering ANY ball inside the section
+    waveTime.set(waveTime.get() + (waveHovered.current ? delta * 0.15 : delta));
   });
 
-  // Video animations
-  const videoScale = useTransform(videoScrollProgress, [0, 1], [0.75, 1]);
-  const videoOpacity = useTransform(videoScrollProgress, [0, 1], [0, 1]);
-  const videoY = useTransform(videoScrollProgress, [0, 1], [40, 0]);
-  const springVideoScale = useSpring(videoScale, { stiffness: 100, damping: 20 });
+  const waveStack = [
+    { brand: "figma", name: "Figma" },
+    { brand: "react", name: "React" },
+    { brand: "javascript", name: "JavaScript" },
+    { brand: "typescript", name: "TypeScript" },
+    { brand: "nodedotjs", name: "Node.js" },
+    { brand: "nextdotjs", name: "Next.js" },
+    { brand: "deno", name: "Deno" },
+    { brand: "tailwindcss", name: "Tailwind CSS" },
+    { brand: "android", name: "Android" },
+    { brand: "postman", name: "Postman" },
+    { brand: "vercel", name: "Vercel" },
+    { brand: "framer", name: "Framer Motion" },
+    { brand: "github", name: "GitHub" },
+    { brand: "docker", name: "Docker" },
+    { brand: "graphql", name: "GraphQL" },
+    { brand: "jest", name: "Jest" },
+    { brand: "firebase", name: "Firebase" },
+    { brand: "supabase", name: "Supabase" },
+    // Only shows on ultrawide (2xl)
+    { brand: "figma", name: "Figma" },
+    { brand: "react", name: "React Native" },
+    { brand: "javascript", name: "JavaScript" },
+    { brand: "typescript", name: "TypeScript" },
+    { brand: "tailwindcss", name: "Tailwind CSS" },
+    { brand: "nodedotjs", name: "Node.js" },
+  ];
+
+
 
   useEffect(() => {
     if (currentLineIndex >= lines.length) {
@@ -798,108 +880,65 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
 
   return (
     <div ref={containerRef} className="relative w-full bg-background selection:bg-stone-200">
-      {/* HERO SECTION */}
-      <motion.section
-        style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="flex h-screen flex-col items-center justify-center p-6 text-center overflow-hidden"
-      >
-        <h1 className="max-w-[95vw] w-full text-4xl font-medium tracking-[-0.05em] text-stone-900 md:text-7xl lg:text-8xl leading-[1.0] font-sans mb-12">
-          {lines.map((line, i) => (
-            <div key={i} className="relative block h-[1.1em] flex justify-center items-center">
-              <div className="invisible whitespace-nowrap">
-                {line.split(/(Gama)/g).map((part, partIndex) => (
-                  <span key={partIndex} className={part === "Gama" ? "text-stone-500" : ""}>
-                    {part}
-                  </span>
-                ))}
-                {i === lines.length - 1 && (
-                  <span className="inline-block w-[4px] ml-1">|</span>
-                )}
-              </div>
-
-              <div className="absolute inset-0 flex justify-center items-center whitespace-nowrap text-center">
-                {i <= currentLineIndex && (
-                  <>
-                    {line.split(/(Gama)/g).map((part, partIndex) => {
-                      const prevParts = line.split(/(Gama)/g).slice(0, partIndex).join("");
-                      const partInTyped = i < currentLineIndex
-                        ? part
-                        : part.slice(0, Math.max(0, currentCharIndex - prevParts.length));
-
-                      if (part === "Gama") {
-                        return (
-                          <span key={partIndex} className="text-stone-500">
-                            {partInTyped}
-                          </span>
-                        );
-                      }
-                      return <span key={partIndex}>{partInTyped}</span>;
-                    })}
-
-                    {((!isFinished && i === currentLineIndex) || (isFinished && i === lines.length - 1)) && (
-                      <motion.span
-                        animate={{ opacity: [1, 0] }}
-                        transition={{ repeat: Infinity, duration: 0.8 }}
-                        className="inline-block w-[4px] h-[0.9em] bg-stone-900 translate-y-[0.1em] ml-1"
-                      />
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
-        </h1>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={isFinished ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center gap-4"
-        >
-          <Link
-            href="/projects"
-            className="group flex items-center gap-2 rounded-full bg-stone-900 px-8 py-3.5 text-[15px] font-medium text-white transition-all hover:bg-black hover:shadow-xl active:scale-[0.98]"
-          >
-            {t("hero_primary_button")}
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
-          <Link
-            href="/about"
-            className="group flex items-center gap-2 rounded-full bg-stone-100 border border-stone-200 px-8 py-3.5 text-[15px] font-medium text-stone-600 transition-all hover:bg-stone-200 hover:text-stone-900 active:scale-[0.98]"
-          >
-            <User className="w-4 h-4 text-stone-400 group-hover:text-stone-600 transition-colors" />
-            {t("hero_secondary_button")}
-          </Link>
-        </motion.div>
-      </motion.section>
-
-      {/* SCROLL REVEAL VIDEO SECTION */}
-      <section ref={videoRef} className="relative min-h-[90vh] flex flex-col items-center justify-center p-6 md:p-12 z-20 overflow-visible">
-        <motion.div
-          style={{ scale: springVideoScale, opacity: videoOpacity, y: videoY }}
-          className="relative w-full max-w-7xl aspect-video bg-black rounded-[3rem] overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.3)]"
-        >
-          <div className="absolute inset-0 bg-stone-900/50" />
-          <iframe
-            className="w-full h-full relative z-10 opacity-80"
-            src="https://www.youtube.com/embed/Ecq2kcubTnY?autoplay=1&mute=1&loop=1&playlist=Ecq2kcubTnY&controls=0&modestbranding=1&rel=0"
-            title="Hero Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          />
-
-          <div className="absolute bottom-8 right-8 z-20">
-            <div className="bg-white/10 backdrop-blur-md rounded-full p-3 hover:bg-white/20 transition-colors cursor-pointer border border-white/10">
-              <Play className="w-6 h-6 text-white fill-white" />
-            </div>
+      {/* NEW LIGHT HERO GRID SECTION */}
+      <section className="relative z-20 w-full pt-12 pb-32">
+        
+        {/* HERO TITLE & BIO (Side-by-Side) */}
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-16 items-end pt-20 pb-16">
+          <h1 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
+            <TypingText text="Hi, I am a Frontend Software Engineer." />
+          </h1>
+          <div className="text-lg text-stone-500 leading-relaxed max-w-xl lg:pb-2">
+            <TypingText text="With 4+ years of experience, I am a software engineer passionate about creating scalable, high-performance web applications. Focused on blending meticulous design with robust architecture using React, Next.js, TypeScript, and modern tools to deliver exceptional digital experiences." delay={300} />
           </div>
-        </motion.div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start pb-24 pt-4">
+          
+          {/* Column 1 */}
+          <div className="flex flex-col gap-16">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+              <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative">
+                <img 
+                  src="https://i.pinimg.com/originals/ab/34/21/ab3421f81bf6b5253793fe83c29cfd19.gif" 
+                  className="w-full h-auto" 
+                  alt="Music Player" 
+                />
+              </div>
+              <div className="px-1">
+                <h3 className="text-stone-900 font-semibold text-[17px]">Music Player</h3>
+                <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Interactive Interface</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Column 2 */}
+          <div className="flex flex-col gap-16">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
+              <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative">
+                <img 
+                  src="https://i.pinimg.com/originals/ec/f3/a1/ecf3a12f3413df7a79e40cf90c41b028.gif" 
+                  className="w-full h-auto" 
+                  alt="Interface Interaction" 
+                />
+              </div>
+              <div className="px-1">
+                <h3 className="text-stone-900 font-semibold text-[17px]">Dynamic Calendar</h3>
+                <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">System Design</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
+
+      {/* WAVE TOOLS SECTION (Omitted for now per user request) */}
+
+
 
       {/* AGENTIC ERA FEATURE SECTION */}
       <section className="max-w-7xl mx-auto px-6 py-32 space-y-32">
-        <div className="max-w-4xl">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1]">
+        <div className="max-w-7xl">
+          <h2 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
             <TypingText text={t("agentic_era_title")} />
           </h2>
         </div>
@@ -907,11 +946,11 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-medium text-stone-900">
-                <TypingText text={t("agentic_era_subtitle")} delay={1000} />
+              <h3 className="text-4xl md:text-[52px] font-medium tracking-tight text-stone-900 leading-[1.1]">
+                <TypingText text={t("agentic_era_subtitle")} delay={200} />
               </h3>
-              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
-                <TypingText text={t("agentic_era_description")} delay={1500} />
+              <p className="text-xl text-stone-600 leading-relaxed max-w-xl">
+                <TypingText text={t("agentic_era_description")} delay={400} />
               </p>
             </div>
 
@@ -991,11 +1030,11 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
           {/* Right side text */}
           <div className="space-y-8 order-1 lg:order-2 pl-0 lg:pl-12">
             <div className="space-y-4">
-              <h3 className="text-2xl font-medium text-stone-900">
-                <TypingText text="Crafting Visual Components" delay={500} />
-              </h3>
-              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
-                <TypingText text="I build beautiful, interactive UI components directly into the application, reducing dependency overhead while ensuring pixel-perfect fidelity." delay={1000} />
+              <h2 className="text-4xl md:text-[52px] font-medium tracking-tight text-stone-900 leading-[1.1]">
+                <TypingText text="Crafting Visual Components" delay={150} />
+              </h2>
+              <p className="text-[19px] md:text-xl text-stone-600 leading-relaxed">
+                <TypingText text="I build beautiful, interactive UI components directly into the application, reducing dependency overhead while ensuring pixel-perfect fidelity." delay={300} />
               </p>
             </div>
 
@@ -1003,7 +1042,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 1.5 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
               className="flex items-center gap-4 pt-4"
             >
               <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
@@ -1025,11 +1064,11 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
           
           <div className="space-y-8">
             <div className="space-y-4">
-              <h3 className="text-2xl font-medium text-stone-900">
-                <TypingText text="Fluid Micro-Interactions" delay={500} />
+              <h3 className="text-4xl md:text-[52px] font-medium tracking-tight text-stone-900 leading-[1.1]">
+                <TypingText text="Fluid Micro-Interactions" delay={150} />
               </h3>
-              <p className="text-lg text-stone-600 leading-relaxed max-w-lg">
-                <TypingText text="Every great digital product relies on details that elevate the experience. Small animations and well-crafted physics make interfaces feel natural and engaging." delay={1000} />
+              <p className="text-[19px] md:text-xl text-stone-600 leading-relaxed max-w-lg">
+                <TypingText text="Every great digital product relies on details that elevate the experience. Small animations and well-crafted physics make interfaces feel natural and engaging." delay={300} />
               </p>
             </div>
 
@@ -1037,7 +1076,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 1.5 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
               className="flex items-center gap-4 pt-4"
             >
               <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200">
@@ -1057,7 +1096,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center justify-center w-full"
           >
-            <div className="w-full max-w-[560px] rounded-3xl border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden bg-stone-50 relative group flex">
+            <div className="w-full max-w-[840px] rounded-3xl border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden bg-stone-50 relative group flex">
                 <video 
                   src="/PinDown.io_@max0743_1776060477.mp4" 
                   autoPlay 
@@ -1077,11 +1116,11 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
 
       {/* PROJECT SHOWCASE SECTION */}
       <section className="max-w-[100vw] overflow-hidden py-32 space-y-16">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-stone-900 leading-[1.1] max-w-xl">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-end">
+          <h2 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
             <TypingText text={t("showcase_title")} />
           </h2>
-          <p className="text-lg text-stone-500 leading-relaxed max-w-md pb-2">
+          <p className="text-[19px] md:text-xl text-stone-600 leading-relaxed max-w-md pb-4">
             <TypingText text={t("showcase_description")} delay={1000} />
           </p>
         </div>
@@ -1137,7 +1176,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
       {/* BLOG SECTION */}
       <section className="max-w-[100vw] overflow-hidden py-32 space-y-12">
         <div className="max-w-7xl mx-auto px-6 flex items-end justify-between">
-          <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-stone-900">
+          <h2 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
             Latest Blogs
           </h2>
           <Link 
