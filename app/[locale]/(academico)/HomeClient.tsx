@@ -387,8 +387,7 @@ function ShareWidget() {
     <div 
       ref={widgetRef}
       className="w-[490px] bg-white rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-stone-200/60 p-6 text-left flex flex-col z-10 transition-transform duration-500 relative"
-      onMouseEnter={() => setInteracted(true)}
-      onTouchStart={() => setInteracted(true)}
+      onClick={() => setInteracted(true)}
     >
       {!interacted && isInView && (
         <motion.div
@@ -806,7 +805,11 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
   const waveTime = useMotionValue(0);
   const waveHovered = useRef(false);
   const [hoveredWaveIndex, setHoveredWaveIndex] = useState<number | null>(null);
-  const [showAllProjects, setShowAllProjects] = useState(false);
+  // Carousel drag state
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isDraggingCarousel, setIsDraggingCarousel] = useState(false);
+  const [startCarouselX, setStartCarouselX] = useState(0);
+  const [carouselScrollLeft, setCarouselScrollLeft] = useState(0);
 
   useAnimationFrame((t, delta) => {
     // 0.15 makes it run at 15% speed (SUPER slow) when hovering ANY ball inside the section
@@ -881,10 +884,10 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
   return (
     <div ref={containerRef} className="relative w-full bg-background selection:bg-stone-200">
       {/* NEW LIGHT HERO GRID SECTION */}
-      <section className="relative z-20 w-full pt-12 pb-32">
+      <section className="relative z-20 w-full pt-12 pb-16">
         
         {/* HERO TITLE & BIO (Side-by-Side) */}
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-16 items-end pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-16 items-end pt-12 pb-8">
           <h1 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
             <TypingText text="Hi, I am a Frontend Software Engineer." />
           </h1>
@@ -893,40 +896,179 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start pb-24 pt-4">
-          
-          {/* Column 1 */}
-          <div className="flex flex-col gap-16">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
-              <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative">
-                <img 
-                  src="https://i.pinimg.com/originals/ab/34/21/ab3421f81bf6b5253793fe83c29cfd19.gif" 
-                  className="w-full h-auto" 
-                  alt="Music Player" 
-                />
-              </div>
-              <div className="px-1">
-                <h3 className="text-stone-900 font-semibold text-[17px]">Music Player</h3>
-                <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Interactive Interface</p>
-              </div>
-            </motion.div>
-          </div>
+        <div 
+          ref={carouselRef}
+          className={`w-full overflow-x-scroll pt-4 pb-12 custom-scrollbar scroll-smooth select-none ${isDraggingCarousel ? 'cursor-grabbing active:scroll-auto' : 'cursor-grab'}`}
+          onWheel={(e) => {
+            if (e.deltaY !== 0) {
+              e.currentTarget.scrollLeft += e.deltaY;
+            }
+          }}
+          onMouseDown={(e) => {
+            setIsDraggingCarousel(true);
+            setStartCarouselX(e.pageX - (carouselRef.current?.offsetLeft || 0));
+            setCarouselScrollLeft(carouselRef.current?.scrollLeft || 0);
+          }}
+          onMouseUp={() => setIsDraggingCarousel(false)}
+          onMouseLeave={() => setIsDraggingCarousel(false)}
+          onMouseMove={(e) => {
+            if (!isDraggingCarousel || !carouselRef.current) return;
+            e.preventDefault();
+            const x = e.pageX - carouselRef.current.offsetLeft;
+            const walk = (x - startCarouselX) * 1.5;
+            carouselRef.current.scrollLeft = carouselScrollLeft - walk;
+          }}
+        >
+          <div className="flex gap-4 md:gap-5 px-[max(24px,calc((100vw-1280px)/2))]">
+            {/* Column 1: Stacked */}
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-[400px] justify-center">
+              {/* 1.1 Library App Image */}
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-[#FF4500] rounded-[5px] border border-stone-200 overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/1200x/87/03/8f/87038fa56ab122b88a67880f17eec18a.jpg" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Library App" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Library App</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Mobile Development</p>
+                </div>
+              </motion.div>
 
-          {/* Column 2 */}
-          <div className="flex flex-col gap-16">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4">
-              <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative">
-                <img 
-                  src="https://i.pinimg.com/originals/ec/f3/a1/ecf3a12f3413df7a79e40cf90c41b028.gif" 
-                  className="w-full h-auto" 
-                  alt="Interface Interaction" 
-                />
-              </div>
-              <div className="px-1">
-                <h3 className="text-stone-900 font-semibold text-[17px]">Dynamic Calendar</h3>
-                <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">System Design</p>
-              </div>
-            </motion.div>
+              {/* 1.2 Music Player GIF */}
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/originals/ab/34/21/ab3421f81bf6b5253793fe83c29cfd19.gif" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Music Player" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Music Player</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Interactive Interface</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 2: Dynamic Calendar + Fluid Navigation */}
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-[420px] justify-center">
+               {/* 2.1 Interface Interaction GIF */}
+               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/originals/ec/f3/a1/ecf3a12f3413df7a79e40cf90c41b028.gif" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Interface Interaction" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Dynamic Calendar</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">System Design</p>
+                </div>
+              </motion.div>
+
+               {/* 2.2 Fluid Navigation GIF */}
+               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                  <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden transition-colors group-hover:border-stone-400">
+                    <img 
+                      src="https://i.pinimg.com/originals/e4/1d/bf/e41dbfb47a9797a4cf333e85124acea8.gif" 
+                      className="w-full h-auto pointer-events-none" 
+                      alt="Smooth Interaction" 
+                    />
+                  </div>
+                  <div className="px-1">
+                    <h3 className="text-stone-900 font-semibold text-[17px]">Fluid Navigation</h3>
+                    <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">UX Motion</p>
+                  </div>
+               </motion.div>
+            </div>
+
+            {/* Column 7: Stacked - New Assets */}
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-[400px] justify-start md:pt-8">
+              {/* 7.1 Mobile UI */}
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/1200x/72/cc/3e/72cc3e5ab9382fdc1b417aca48bc9327.jpg" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Mobile Interface" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Mobile Banking</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Fintech Solution</p>
+                </div>
+              </motion.div>
+
+              {/* 7.2 Web UI/Grid */}
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.9, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/1200x/6e/79/f9/6e79f90b1889689a27b50e1959a2dfdd.jpg" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Web Grid UI" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Editorial Grid</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Web Design</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 8: Single - Abstract UI */}
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-[430px] justify-center md:pb-8">
+               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                  <div className="w-full bg-stone-50 rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden transition-colors group-hover:border-stone-400">
+                    <img 
+                      src="https://i.pinimg.com/1200x/10/0d/00/100d007ccf4fe0960eeac0e46e5de762.jpg" 
+                      className="w-full h-auto pointer-events-none" 
+                      alt="Abstract UI" 
+                    />
+                  </div>
+                  <div className="px-1">
+                    <h3 className="text-stone-900 font-semibold text-[17px]">Modular Components</h3>
+                    <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Design System</p>
+                  </div>
+               </motion.div>
+            </div>
+
+            {/* Column 9: Stacked - Clean App + New Card */}
+            <div className="flex flex-col gap-4 min-w-[85vw] md:min-w-[420px] justify-center">
+               <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.1, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/1200x/a9/11/37/a91137da376fcdb1f0071ef38e548c62.jpg" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Clean App UI" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Minimal Analytics</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Software Design</p>
+                </div>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }} className="flex flex-col gap-4 group cursor-pointer">
+                <div className="w-full bg-white rounded-[5px] border border-stone-200 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden relative transition-colors group-hover:border-stone-400">
+                  <img 
+                    src="https://i.pinimg.com/1200x/68/14/66/681466f8143645253f8e125298ef08b5.jpg" 
+                    className="w-full h-auto pointer-events-none" 
+                    alt="Brand Identity" 
+                  />
+                </div>
+                <div className="px-1">
+                  <h3 className="text-stone-900 font-semibold text-[17px]">Brand Showcase</h3>
+                  <p className="text-stone-500 text-[11px] uppercase tracking-[0.15em] font-semibold mt-1">Visual Identity</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* End spacer to ensure right margin on scroll */}
+            <div className="min-w-[max(24px,calc((100vw-1280px)/2))] h-px" aria-hidden="true" />
           </div>
         </div>
       </section>
@@ -936,7 +1078,7 @@ export function InstitucionalHomePage({ initialBlogs }: { initialBlogs: BlogPost
 
 
       {/* AGENTIC ERA FEATURE SECTION */}
-      <section className="max-w-7xl mx-auto px-6 py-32 space-y-32">
+      <section className="max-w-7xl mx-auto px-6 pt-16 pb-32 space-y-32">
         <div className="max-w-7xl">
           <h2 className="text-5xl md:text-[60px] lg:text-[72px] font-medium tracking-tight text-stone-900 leading-[1.05]">
             <TypingText text={t("agentic_era_title")} />
